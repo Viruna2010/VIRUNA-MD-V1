@@ -31,9 +31,9 @@ MENU_IMAGE_URL: process.env.MENU_IMAGE_URL || "https://files.catbox.moe/ke8nul.j
 // add custom menu and mention reply image url
 PREFIX: process.env.PREFIX || ".",
 // add your prifix for bot   
-BOT_NAME: process.env.BOT_NAME || "SENU-X-BOT",
+BOT_NAME: process.env.BOT_NAME || "Viruna MD",
 // add bot namw here for menu
-STICKER_NAME: process.env.STICKER_NAME || "SENU-MD",
+STICKER_NAME: process.env.STICKER_NAME || "Viruna MD",
 // type sticker pack name 
 CUSTOM_REACT: process.env.CUSTOM_REACT || "false",
 // make this true for custum emoji react    
@@ -41,15 +41,15 @@ CUSTOM_REACT_EMOJIS: process.env.CUSTOM_REACT_EMOJIS || "💝,💖,💗,❤️�
 // chose custom react emojis by yourself 
 DELETE_LINKS: process.env.DELETE_LINKS || "false",
 // automatic delete links witho remove member 
-OWNER_NUMBER: process.env.OWNER_NUMBER || "94788770020",
+OWNER_NUMBER: process.env.OWNER_NUMBER || "94786888371",
 // add your bot owner number
-OWNER_NAME: process.env.OWNER_NAME || "Jᴇꜱᴛᴇʀ TᴇᴄʜX",
+OWNER_NAME: process.env.OWNER_NAME || "Viruna Randinu",
 // add bot owner name
 DESCRIPTION: process.env.DESCRIPTION || "*© ᴘᴏᴡᴇʀᴇᴅ ʙʏ Jᴇꜱᴛᴇʀ TᴇᴄʜX*",
 // add bot owner name    
 ALIVE_IMG: process.env.ALIVE_IMG || "https://files.catbox.moe/ke8nul.jpg",
 // add img for alive msg
-LIVE_MSG: process.env.LIVE_MSG || "> I'm alive now *SENU-MD*⚡",
+LIVE_MSG: process.env.LIVE_MSG || "> I'm alive now *Viruna MD*⚡",
 // add alive msg here 
 READ_MESSAGE: process.env.READ_MESSAGE || "false",
 // Turn true or false for automatic read msgs
