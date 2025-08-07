@@ -113,12 +113,12 @@ const port = process.env.PORT || 9090;
   console.log('Plugins installed successful ✅')
   console.log('Bot connected to whatsapp ✅')
   
-  let up = `╭─〔 *🤖 SENU-MD BOT* 〕  
+  let up = `╭─〔 *🤖 Viruna-MD BOT* 〕  
 ├─▸ *Ultra Super Fast Powerfull ⚠️*  
-│     *World Best BOT SENU-MD* 
+│     *World Best BOT Viruna-MD* 
 ╰─➤ *Your Smart WhatsApp Bot is Ready To use 🍁!*  
 
-- *🖤 Thank You for Choosing SENU-MD!* 
+- *🖤 Thank You for Choosing Viruna-MD!* 
 
 ╭──〔 🔗 *Information* 〕  
 ├─ 🧩 *Prefix:* = ${prefix}
@@ -126,7 +126,7 @@ const port = process.env.PORT || 9090;
 │    https://whatsapp.com/channel/0029Vb2OcviBFLgPzVjWhE0n  
 ├─ 🌟 *Star the Repo:*  
 │    https://github.com/Jester36/SENU-MD  
-╰─🚀 *POWERED BY JESTER-OFC*`;
+╰─🚀 *POWERED BY Viruna-OFC*`;
 
     conn.sendMessage(conn.user.id,{ image: { url: `https://i.ibb.co/RGLKzshm/SulaMd.jpg` }, caption: up })
   }
