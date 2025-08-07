@@ -128,7 +128,7 @@ const port = process.env.PORT || 9090;
 │    https://github.com/Jester36/SENU-MD  
 ╰─🚀 *POWERED BY Viruna-OFC*`;
 
-    conn.sendMessage(conn.user.id,{ image: { url: `https://i.ibb.co/RGLKzshm/SulaMd.jpg` }, caption: up })
+    conn.sendMessage(conn.user.id,{ image: { url: `https://files.catbox.moe/38a7d1.jpg` }, caption: up })
   }
   })
   conn.ev.on('creds.update', saveCreds)
