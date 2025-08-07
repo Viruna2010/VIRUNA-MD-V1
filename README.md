@@ -15,7 +15,7 @@
 </p>
 
 <a><img src='https://files.catbox.moe/zkv7u1.jpg'/></a>
-<h1 align="center"> SENU-MD </h1> 
+<h1 align="center"> Viruna-MD </h1> 
 <p align="center">SENU-MD made for people, on Earth </p>
 
  
@@ -28,7 +28,7 @@
 
 
 
-<p align="center"> SENU-MD uses
+<p align="center"> Viruna-MD uses
   <a href="https://github.com/WhiskeySockets/Baileys)**">Multi-Device Baileys.</a>
 </p>
 <p align="center">
