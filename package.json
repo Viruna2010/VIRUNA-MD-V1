@@ -1,12 +1,12 @@
 {
   "name": "Viruna-MD",
   "version": "4.5.0",
-  "description": "A WhatsApp Bot Created By JESTER",
+  "description": "A WhatsApp Bot Created By Viruna Randinu",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name SENU-MD",
-    "stop": "pm2 stop SENU-MD",
-    "restart": "pm2 restart SENU-MD"
+    "start": "pm2 start index.js --deep-monitoring --attach --name Viruna-MD",
+    "stop": "pm2 stop Viruna-MD",
+    "restart": "pm2 restart Viruna-MD"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "latest",
