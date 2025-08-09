@@ -1,6 +1,6 @@
-name: khan-md
+name: Viruna-md
 services:
-  - name: khan-md-service
+  - name: Viruna-md-service
     type: web
     ports:
       - 5000
