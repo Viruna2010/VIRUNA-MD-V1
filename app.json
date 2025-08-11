@@ -1,8 +1,8 @@
 {
-  "name": "Viruna-MD",
-  "description": "Javascript WhatsApp bot made by Viruna Randinu",
-  "logo": "https://files.catbox.moe/neni8p.jpg",
-  "keywords": ["Viruna-MD"],
+  "name": "AV-Tech MD",
+  "description": "Javascript WhatsApp bot made by Viruna and Avishka",
+  "logo": "https://files.catbox.moe/cjcyer.jpg",
+  "keywords": ["AV-Tech MD"],
   "success_url": "/",
 
     "stack": "container",
@@ -16,7 +16,7 @@
     "STICKER_NAME": {
       "description": "type your sticker pack name.",
       "required": false,
-      "value": "Viruna-MD"
+      "value": "AV-Tech MD"
     }, 
       
     "PREFIX": {
@@ -78,27 +78,27 @@
     "AUTO_STATUS_MSG": {
       "description": "Type custom message on status reply",
       "required": true,
-      "value": "*SEEN YOUR STATUS BY SENU-MD 🖤*"
+      "value": "*SEEN YOUR STATUS BY AV-Tech MD 🖤*"
    
      }, 
     
     "OWNER_NAME": {
       "description": "Type Bot Owner Name.",
       "required": false,
-      "value": "JESTER TECHX"
+      "value": "Viruna and Avishka"
 }, 
 
     "OWNER_NUMBER": {
       "description": "put the owner number for bot.",
       "required": false,
-      "value": "94788770020"
+      "value": "94786888371,94713703177"
 
     }, 
 
     "BOT_NAME": {
       "description": "Type here the bot name.",
       "required": false,
-      "value": "SENU-MD"
+      "value": "AV-Tech MD"
 
       }, 
 
@@ -131,13 +131,13 @@
     "MENU_IMAGE_URL": {
       "description": "add url for mention reply and menu if want.",
       "required": false,
-      "value": "https://files.catbox.moe/7zfdcq.jpg"
+      "value": "https://files.catbox.moe/cjcyer.jpg"
     },
     
      "DESCRIPTION": {
       "description": "add caption for menu and other",
       "required": false,
-      "value": "*© ᴘᴏᴡᴇʀᴇᴅ ʙʏ Jᴀᴡᴀᴅ TᴇᴄʜX*"
+      "value": "*© ᴘᴏᴡᴇʀᴇᴅ ʙʏ AV-Tech MD Developers*"
     },
 
       "DELETE_LINKS": {
