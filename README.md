@@ -1,8 +1,8 @@
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=100&pause=1000&color=FF033E&center=true&width=1000&height=200&lines=SENU-MD-BOT" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=100&pause=1000&color=FF033E&center=true&width=1000&height=200&lines=AV-Tech MD-BOT" alt="Typing SVG" /></a>
   </p>
 
 <p align="center">
-  <h1 align="center">SENU-MD 3.0</h1>
+  <h1 align="center">AV-Tech MD 3.0</h1>
 </p>
 
 > **`Updated` The Version 3.0**
@@ -10,25 +10,25 @@
 ---
 <p align="center">
   <a href="https://github.com/Awais-star-a11y">
-    <img src="http://readme-typing-svg.herokuapp.com?color=FF0000&center=true&vCenter=true&multiline=false&lines=SENU-MD-+v3.0+MultiDevice;Developed+by+SenuMd;Give+star+and+forks+this+Repo+🌟" alt="SENU110Readme">
+    <img src="http://readme-typing-svg.herokuapp.com?color=FF0000&center=true&vCenter=true&multiline=false&lines=SENU-MD-+v3.0+MultiDevice;Developed+by+SenuMd;Give+star+and+forks+this+Repo+🌟" alt="AVTech110Readme">
   </a>
 </p>
 
-<a><img src='https://files.catbox.moe/zkv7u1.jpg'/></a>
-<h1 align="center"> Viruna-MD </h1> 
-<p align="center">SENU-MD made for people, on Earth </p>
+<a><img src='https://files.catbox.moe/cjcyer.jpg'/></a>
+<h1 align="center"> AV-Tech MD </h1> 
+<p align="center">AV-Tech MD made for people, on Earth </p>
 
  
    
 <p align="center">
  <h2>WhatsApp channel</h2>
-  <a href="https://whatsapp.com/channel/0029Vb2OcviBFLgPzVjWhE0n" target="_blank">
+  <a href="https://whatsapp.com/channel/0029VbB1qAX002T905udDP2D" target="_blank">
     <img alt="whatsapp" src="https://img.shields.io/badge/ Join Whatsapp Channel For Updates-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
  
 
 
 
-<p align="center"> Viruna-MD uses
+<p align="center"> AV-Tech MD uses
   <a href="https://github.com/WhiskeySockets/Baileys)**">Multi-Device Baileys.</a>
 </p>
 <p align="center">
@@ -54,7 +54,7 @@
 <table align="center">
   <tr>
     <td>
-      <a href="https://whatsapp.com/channel/0029VatOy2EAzNc2WcShQw1j/2303" target="_blank">
+      <a href="https://whatsapp.com/channel/0029VbB1qAX002T905udDP2D" target="_blank">
         <img alt="View Workflow Codes" src="https://img.shields.io/badge/View-Workflow%20Codes-FF0076?style=for-the-badge&logo=githubactions&logoColor=white"/>
       </a>
     </td>
@@ -82,7 +82,7 @@
 ## 🪀  SUPPORT CHANNEL
 
 <div align="center">
-  <a href="https://whatsapp.com/channel/0029VazFu9h7dmeQZLEuWB0V/229">
+  <a href="https://whatsapp.com/channel/0029VbB1qAX002T905udDP2D">
     <img src="https://img.shields.io/badge/Join-WhatsApp%20Channel-25D366?style=for-the-badge&logo=whatsapp&logoColor=white&labelColor=000000"/>
   </a>
 </div>
@@ -113,7 +113,7 @@
   <img src="https://github.com/JawadYT36/KHAN-MD/blob/main/assets/futuretech.gif?raw=true" width="100%"/>
 </div>
 
-## 👑 JESTER STATUS
+## 👑 VIRUNA & AVISHKA STATUS
 
 ```diff
 + Project Status: Active
