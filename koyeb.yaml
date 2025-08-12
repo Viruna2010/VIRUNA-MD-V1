@@ -1,6 +1,6 @@
-name: Viruna-md
+name: av-tech md
 services:
-  - name: Viruna-md-service
+  - name: avtech-md-service
     type: web
     ports:
       - 5000
