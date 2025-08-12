@@ -10,7 +10,7 @@
 ---
 <p align="center">
   <a href="https://github.com/Awais-star-a11y">
-    <img src="http://readme-typing-svg.herokuapp.com?color=FF0000&center=true&vCenter=true&multiline=false&lines=SENU-MD-+v3.0+MultiDevice;Developed+by+SenuMd;Give+star+and+forks+this+Repo+🌟" alt="AVTech110Readme">
+    <img src="http://readme-typing-svg.herokuapp.com?color=FF0000&center=true&vCenter=true&multiline=false&lines=AV-Tech MD-+v3.0+MultiDevice;Developed+by+AVTechMd;Give+star+and+forks+this+Repo+🌟" alt="AVTech110Readme">
   </a>
 </p>
 
