@@ -1,12 +1,12 @@
 {
-  "name": "Viruna-MD",
+  "name": "AV-Tech MD",
   "version": "4.5.0",
-  "description": "A WhatsApp Bot Created By Viruna Randinu",
+  "description": "A WhatsApp Bot Created By Viruna & Avishka",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name Viruna-MD",
-    "stop": "pm2 stop Viruna-MD",
-    "restart": "pm2 restart Viruna-MD"
+    "start": "pm2 start index.js --deep-monitoring --attach --name AV-Tech MD",
+    "stop": "pm2 stop AV-Tech MD",
+    "restart": "pm2 restart AV-Tech MD"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "latest",
