@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pm2 start index.js --deep-monitoring --attach --name AVTech-MD",
     "stop": "pm2 stop AVTech-MD",
-    "restart": "pm2 restart Viruna-MD"
+    "restart": "pm2 restart AVTech-MD"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "latest",
