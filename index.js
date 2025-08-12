@@ -123,7 +123,7 @@ const port = process.env.PORT || 9090;
 ╭──〔 🔗 *Information* 〕  
 ├─ 🧩 *Prefix:* = ${prefix}
 ├─ 📢 *Join Channel:*  
-│      https://whatsapp.com/channel/0029VbB1qAX002T905udDP2D
+│     https://whatsapp.com/channel/0029VbB1qAX002T905udDP2D
 ├─ 🌟 *Star the Repo:*  
 │    https://github.com/avtzone/NEW  
 ╰─🚀 *POWERED BY AV-Tech MD Developers*`;
