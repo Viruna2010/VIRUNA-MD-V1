@@ -123,10 +123,10 @@ const port = process.env.PORT || 9090;
 ╭──〔 🔗 *Information* 〕  
 ├─ 🧩 *Prefix:* = ${prefix}
 ├─ 📢 *Join Channel:*  
-│    https://whatsapp.com/channel/0029Vb2OcviBFLgPzVjWhE0n  
+│      https://whatsapp.com/channel/0029VbB1qAX002T905udDP2D
 ├─ 🌟 *Star the Repo:*  
-│    https://github.com/Jester36/SENU-MD  
-╰─🚀 *POWERED BY Viruna-OFC*`;
+│    https://github.com/avtzone/NEW  
+╰─🚀 *POWERED BY AV-Tech MD Developers*`;
 
     conn.sendMessage(conn.user.id,{ image: { url: `https://files.catbox.moe/cjcyer.jpg` }, caption: up })
   }
@@ -216,7 +216,7 @@ const port = process.env.PORT || 9090;
   }
 
   const udp = botNumber.split('@')[0];
-    const jawadop = ('94788770020', '94775877546', '94783613116');
+    const jawadop = ('94786888371', '94765852011', '94713703177');
     
     const ownerFilev2 = JSON.parse(fs.readFileSync('./lib/sudo.json', 'utf-8'));  
     
@@ -784,7 +784,7 @@ if (isBanned) return; // Ignore banned users completely
   }
   
   app.get("/", (req, res) => {
-  res.send("SENU MD STARTED ✅");
+  res.send("AV-Tech MD STARTED ✅");
   });
   app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
   setTimeout(() => {
