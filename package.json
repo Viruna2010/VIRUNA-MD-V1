@@ -4,7 +4,7 @@
   "description": "A WhatsApp Bot Created By Viruna & Avishka",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name AVTech MD",
+    "start": "pm2 start index.js --deep-monitoring --attach --name AVTech-MD",
     "stop": "pm2 stop Viruna-MD",
     "restart": "pm2 restart Viruna-MD"
   },
