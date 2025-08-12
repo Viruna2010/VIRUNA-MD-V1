@@ -53,12 +53,12 @@ cmd({
     const lastUpdate = fs.statSync(localVersionPath).mtime.toLocaleString();
 
     // GitHub stats
-    const githubRepo = 'https://github.com/Gehansasl/JESTER-MD';
+    const githubRepo = 'https://github.com/avtzone/NEW';
 
     // Check update status
-    let updateMessage = `✅ Your SENU-MD bot is up-to-date!`;
+    let updateMessage = `✅ Your AV-Tech MD bot is up-to-date!`;
     if (localVersion !== latestVersion) {
-      updateMessage = `🚀 Your SENU-MD bot is outdated!
+      updateMessage = `🚀 Your AV-Tech MD bot is outdated!
 🔹 *Current Version:* ${localVersion}
 🔹 *Latest Version:* ${latestVersion}
 
@@ -66,14 +66,14 @@ Use *.update* to update.`;
     }
 
     const statusMessage = `🌟 *Good ${new Date().getHours() < 12 ? 'Morning' : 'Night'}, ${pushname}!* 🌟\n\n` +
-      `📌 *Bot Name:* SENU-MD\n🔖 *Current Version:* ${localVersion}\n📢 *Latest Version:* ${latestVersion}\n📂 *Total Plugins:* ${pluginCount}\n🔢 *Total Commands:* ${totalCommands}\n\n` +
+      `📌 *Bot Name:* AV-Tech MD\n🔖 *Current Version:* ${localVersion}\n📢 *Latest Version:* ${latestVersion}\n📂 *Total Plugins:* ${pluginCount}\n🔢 *Total Commands:* ${totalCommands}\n\n` +
       `💾 *System Info:*\n⏳ *Uptime:* ${uptime}\n📟 *RAM Usage:* ${ramUsage}MB / ${totalRam}MB\n⚙️ *Host Name:* ${hostName}\n📅 *Last Update:* ${lastUpdate}\n\n` +
       `📝 *Changelog:*\n${latestChangelog}\n\n` +
-      `⭐ *GitHub Repo:* ${githubRepo}\n👤 *Owner:* [JesterTechX](wa.me/94788770020)\n\n${updateMessage}\n\n🚀 *Hey! Don't forget to fork & star the repo!*`;
+      `⭐ *GitHub Repo:* ${githubRepo}\n👤 *Owner:* [Viruna TechX](wa.me/94786888371)\n\n${updateMessage}\n\n🚀 *Hey! Don't forget to fork & star the repo!*`;
 
     // Send the status message with an image
     await conn.sendMessage(from, {
-      image: { url: 'https://files.catbox.moe/3y5w8z.jpg' },
+      image: { url: 'https://files.catbox.moe/cjcyer.jpg' },
       caption: statusMessage,
       contextInfo: {
         mentionedJid: [m.sender],
@@ -81,7 +81,7 @@ Use *.update* to update.`;
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363388320701164@newsletter',
-          newsletterName: 'JesterTechX',
+          newsletterName: 'AV-Tech MD',
           serverMessageId: 143
         }
       }
