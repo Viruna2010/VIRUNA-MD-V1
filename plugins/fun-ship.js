@@ -39,7 +39,7 @@ cmd({
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
           newsletterJid: "120363388320701164@newsletter",
-          newsletterName: "JesterTechX",
+          newsletterName: "AV-Tech MD",
           serverMessageId: 143
         }
       }
