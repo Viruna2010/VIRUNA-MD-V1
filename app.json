@@ -1,8 +1,8 @@
 {
-  "name": "AV-Tech MD",
-  "description": "Javascript WhatsApp bot made by Viruna and Avishka",
-  "logo": "https://files.catbox.moe/cjcyer.jpg",
-  "keywords": ["AV-Tech MD"],
+  "name": "CHANUKA-MD",
+  "description": "Javascript WhatsApp bot made by ali",
+  "logo": "https://files.catbox.moe/umz8ez.jpg",
+  "keywords": ["CHANUKA-MD"],
   "success_url": "/",
 
     "stack": "container",
@@ -13,10 +13,11 @@
       "value": ""
     },  
     
+    
     "STICKER_NAME": {
       "description": "type your sticker pack name.",
       "required": false,
-      "value": "AV-Tech MD"
+      "value": "𝐂𝐇𝐀𝐍𝐔𝐊𝐀-𝐌𝐃"
     }, 
       
     "PREFIX": {
@@ -27,40 +28,63 @@
     
     "MODE": {
       "description": "select your bot work type public-private-inbox-group.",
-      "required": false,
+      "required": true,
       "value": "public"
       
     },
-
-     "ANTI_DELETE": {
-      "description": "set true for show deleted messages.",
-      "required": false,
-      "value": "true"  
-    },
-    
+        
     "ALWAYS_ONLINE": {
       "description": "Make it true if want always online.",
       "required": false,
       "value": "false"  
     },    
-   
+  
+    "AUTO_VOICE": {
+      "description": "Make it true if want automatic voice reply .",
+      "required": false,
+      "value": "false"
+    }, 
+
     "AUTO_REPLY": {
       "description": "Make it true if you want automatic reply.",
       "required": false,
       "value": "false"
     }, 
+    
+    "ADMIN_STATUS": {
+      "description": "make it true if want know who promote or demote a member .",
+      "required": false,
+      "value": "false"
+    },
 
+    "WELCOME": {
+      "description": "make it true if want welcome message in groups.",
+      "required": false,
+      "value": "true"
+    },
+    
+   "GOODBYE": {
+      "description": "make it true if want goodbye message in groups.",
+      "required": false,
+      "value": "false"
+    },
+    
     "AUTO_STICKER": {
       "description": "Make it true if you want automatic sticker.",
       "required": false,
       "value": "false"
     }, 
 
-
     "AUTO_STATUS_SEEN": {
       "description": "Make it true for automatic status seen.",
       "required": true,
       "value": "true"
+    }, 
+    
+     "MENTION_REPLY": {
+      "description": "make it true if want mention reply if someone menetion you.",
+      "required": false,
+      "value": "false"
     }, 
 
     "AUTO_STATUS_REACT": {
@@ -71,80 +95,47 @@
 
     "AUTO_STATUS_REPLY": {
       "description": "Make it true for auto reply msg on status seen.",
-      "required": true,
+      "required": false,
       "value": "false"
     }, 
 
     "AUTO_STATUS_MSG": {
       "description": "Type custom message on status reply",
       "required": true,
-      "value": "*SEEN YOUR STATUS BY AV-Tech MD 🖤*"
+      "value": "*SEEN YOUR STATUS JUST NOW CHANUKA-MD 💦🥵*"
    
      }, 
-    
-    "OWNER_NAME": {
-      "description": "Type Bot Owner Name.",
-      "required": false,
-      "value": "Viruna and Avishka"
-}, 
-
-    "OWNER_NUMBER": {
-      "description": "put the owner number for bot.",
-      "required": false,
-      "value": "94786888371,94713703177"
-
-    }, 
 
     "BOT_NAME": {
       "description": "Type here the bot name.",
       "required": false,
-      "value": "AV-Tech MD"
+      "value": "𝐂𝐇𝐀𝐍𝐔𝐊𝐀-𝐌𝐃"
 
       }, 
-
-    "ANTI_LINK": {
-      "description": "Make it true if you want bot auto remove group link.",
+    
+    "ALIVE_IMG": {
+      "description": "put here the bot Menu url if you don't have you can use this public url.",
       "required": true,
-      "value": "true"
-      
-    },
+      "value": "https://files.catbox.moe/umz8ez.jpg" 
+      },
 
-     "ANTI_LINK_KICK": {
-      "description": "Make it true if you want bot auto remove group link.",
+    "DELETE_LINK": {
+      "description": "Make it true if you want bot auto delete group link.",
+      "required": false,
+      "value": "false"
+    }, 
+    
+    "ANTI_LINK": {
+      "description": "Make it true if you want bot auto wearing group link.",
       "required": true,
       "value": "false"
-      
-    },
+    }, 
     
-    "ANTI_BAD": {
+    "ANTI_BAD_WORD": {
       "description": "Make it true if you want bot auto delete bad words.",
       "required": false,
       "value": "false"
-    },
-
-   "MENTION_REPLY": {
-      "description": "make it true if want mention reply if someone menetion you.",
-      "required": false,
-      "value": "false"
-    },
-    
-    "MENU_IMAGE_URL": {
-      "description": "add url for mention reply and menu if want.",
-      "required": false,
-      "value": "https://files.catbox.moe/cjcyer.jpg"
-    },
-    
-     "DESCRIPTION": {
-      "description": "add caption for menu and other",
-      "required": false,
-      "value": "*© ᴘᴏᴡᴇʀᴇᴅ ʙʏ AV-Tech MD Developers*"
-    },
-
-      "DELETE_LINKS": {
-      "description": "remove links from group automatically without removing member",
-      "required": false,
-      "value": "false"
-    },
+    }, 
     
     "AUTO_RECORDING": {
       "description": "Make it true if you want auto recoding.",
@@ -163,6 +154,7 @@
       "required": false,
       "value": "false"
     },
+
     
     "CUSTOM_REACT": {
       "description": "Make it true if you want custom reactions.",
@@ -178,22 +170,10 @@
     }, 
     
     "ANTI_DEL_PATH": {
-      "description": "change it to -same- if you want to resend deleted message in same chat othwise inbox",
+      "description": "if you want true make it your bot number .antidelete on",
       "required": false,
-      "value": "inbox"
+      "value": "log"
     }, 
-
-    "ADMIN_EVENTS": {
-      "description": "make it true if want know who promote or demote a member .",
-      "required": false,
-      "value": "false"
-    },
-
-    "WELCOME": {
-      "description": "make it true if want goodbye and welcome message in groups.",
-      "required": false,
-      "value": "true"
-    },
 
     "READ_MESSAGE": {
       "description": "Make it true if you want bot read your all sms just now.",
