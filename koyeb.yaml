@@ -1,6 +1,6 @@
-name: avtech-md
+name: ali-ai
 services:
-  - name: avtech-md-service
+  - name: ali-ai-service
     type: web
     ports:
       - 5000
@@ -13,3 +13,5 @@ services:
       - fra
       - sin
       
+
+
