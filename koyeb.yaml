@@ -1,6 +1,7 @@
-name: ali-ai
+
+name: Viruna-md
 services:
-  - name: ali-ai-service
+  - name: Viruna-md-service
     type: web
     ports:
       - 5000
@@ -12,6 +13,4 @@ services:
     regions:
       - fra
       - sin
-      
-
 
