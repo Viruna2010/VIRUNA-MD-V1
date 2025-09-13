@@ -6,7 +6,6 @@
   "success_url": "/",
 
     "stack": "container",
-@@ -16,198 +16,198 @@
     "STICKER_NAME": {
       "description": "type your sticker pack name.",
       "required": false,
