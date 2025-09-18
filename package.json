@@ -8,6 +8,10 @@
     "stop": "pm2 stop Viruna-MD",
     "restart": "pm2 restart Viruna-MD"
   },
+  "engines": {
+    "node": "22.x",
+    "npm": "10.x"
+  },
   "dependencies": {
     "@whiskeysockets/baileys": "latest",
     "@adiwajshing/keyed-db": "^0.2.4",
@@ -15,7 +19,7 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@vitalets/google-translate-api": "^9.2.0",
     "@dark-yasiya/scrap": "1.0.1",
-    "@bochilteam/scraper": "^4.2.5",
+    "@bochilteam/scraper": "^4.2.4",
     "pino": "^7.0.5",
     "pm2": "^6.0.5",
     "util": "^0.12.4",
