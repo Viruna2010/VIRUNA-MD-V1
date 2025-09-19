@@ -27,7 +27,7 @@ async(conn, mek, m, {
     return reply("I couldn't find anything :(");
   }
 
-  let caption = `*AV-Tech ʙᴏᴛ*
+  let caption = `*Viruna MD*
 
 📝 ᴛɪᴛʟᴇ : Facebook video
 🔗 ᴜʀʟ : ${q}`;
