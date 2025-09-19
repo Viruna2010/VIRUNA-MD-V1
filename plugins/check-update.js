@@ -53,12 +53,12 @@ cmd({
     const lastUpdate = fs.statSync(localVersionPath).mtime.toLocaleString();
 
     // GitHub stats
-    const githubRepo = 'https://github.com/avtzone/NEW';
+    const githubRepo = 'https://github.com/avtzone/VIRU';
 
     // Check update status
-    let updateMessage = `✅ Your AV-Tech MD bot is up-to-date!`;
+    let updateMessage = `✅ Your Viruna MD bot is up-to-date!`;
     if (localVersion !== latestVersion) {
-      updateMessage = `🚀 Your AV-Tech MD bot is outdated!
+      updateMessage = `🚀 Your Viruna MD bot is outdated!
 🔹 *Current Version:* ${localVersion}
 🔹 *Latest Version:* ${latestVersion}
 
@@ -73,15 +73,15 @@ Use *.update* to update.`;
 
     // Send the status message with an image
     await conn.sendMessage(from, {
-      image: { url: 'https://files.catbox.moe/cjcyer.jpg' },
+      image: { url: 'https://files.catbox.moe/1i675r.jpg' },
       caption: statusMessage,
       contextInfo: {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-          newsletterJid: '120363388320701164@newsletter',
-          newsletterName: 'AV-Tech MD',
+          newsletterJid: '120363418053657336@newsletter',
+          newsletterName: 'Viruna MD',
           serverMessageId: 143
         }
       }
