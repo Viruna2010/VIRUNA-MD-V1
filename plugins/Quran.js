@@ -59,15 +59,15 @@ ${translatedTafsirEnglish.text}`;
     await conn.sendMessage(
       from,
       {
-        image: { url: `https://files.catbox.moe/cjcyer.jpg` },
+        image: { url: `https://files.catbox.moe/1i675r.jpg` },
         caption: quranSurah,
         contextInfo: {
           mentionedJid: [m.sender], 
           forwardingScore: 999,  
           isForwarded: true,   
           forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363354023106228@newsletter', 
-            newsletterName: 'JawadTechX', 
+            newsletterJid: '120363418053657336@newsletter', 
+            newsletterName: 'Viruna MD', 
             serverMessageId: 143
           }
         }
@@ -100,7 +100,7 @@ cmd({
 }, 
 async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
-        let dec = `❤️  ⊷┈ *QURAN KAREEM* ┈⊷  🤍
+        let dec = `❤️  ⊷┈ *Viruna Randinu* ┈⊷  🤍
 
  💫 𝘈𝘭𝘭 𝘴𝘶𝘳𝘢𝘩 𝘢𝘯𝘥 𝘵𝘩𝘦𝘪𝘳 𝘯𝘶𝘮𝘣𝘦𝘳𝘴 𝘭𝘪𝘴𝘵
 𝘧𝘰𝘳 𝘨𝘦𝘵𝘵𝘪𝘯𝘨 𝘴𝘶𝘳𝘢𝘩 𝘵𝘺𝘱𝘦 .𝘴𝘶𝘳𝘢𝘩 36 💫🌸 
@@ -449,15 +449,15 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         await conn.sendMessage(
             from,
             {
-                image: { url: `https://files.catbox.moe/cjcyer.jpg` },
+                image: { url: `https://files.catbox.moe/1i675r.jpg` },
                 caption: dec,
                 contextInfo: {
                     mentionedJid: [m.sender],
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363354023106228@newsletter',
-                        newsletterName: 'JawadTechX',
+                        newsletterJid: '120363418053657336@newsletter',
+                        newsletterName: 'Viruna MD',
                         serverMessageId: 143
                     }
                 }
