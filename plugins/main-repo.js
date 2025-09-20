@@ -13,7 +13,7 @@ cmd({
     filename: __filename,
 },
 async (conn, mek, m, { from, reply }) => {
-    const githubRepoURL = 'https://github.com/Gehansasl/JESTER-MD';
+    const githubRepoURL = 'https://github.com/avtzone/Viruna-MD';
 
     try {
         // Extract username and repo name from the URL
@@ -33,7 +33,7 @@ async (conn, mek, m, { from, reply }) => {
 
         // Send image with caption
         await conn.sendMessage(from, {
-            image: { url: `https://i.ibb.co/bjPrbF84/3174.jpg` },
+            image: { url: `https://files.catbox.moe/1i675r.jpg` },
             caption: formattedInfo,
             contextInfo: { 
                 mentionedJid: [m.sender],
@@ -41,7 +41,7 @@ async (conn, mek, m, { from, reply }) => {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363388320701164@newsletter',
-                    newsletterName: 'JesterTechX',
+                    newsletterName: 'Viruna MD',
                     serverMessageId: 143
                 }
             }
@@ -58,8 +58,8 @@ async (conn, mek, m, { from, reply }) => {
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363388320701164@newsletter',
-                    newsletterName: 'JesterTechX',
+                    newsletterJid: '120363418053657336@newsletter',
+                    newsletterName: 'Viruna MD',
                     serverMessageId: 143
                 }
             }
