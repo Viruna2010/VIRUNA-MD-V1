@@ -1,6 +1,6 @@
 const { cmd } = require('../command');
 
-// Fixed & Created By Vieuna Randinu
+// Fixed & Created By Viruna Randinu
 cmd({
   pattern: "hidetag",
   alias: ["tag", "h"],  
