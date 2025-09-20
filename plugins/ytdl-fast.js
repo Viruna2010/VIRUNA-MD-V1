@@ -29,13 +29,13 @@ cmd({
             return reply("Failed to fetch the video. Please try again later.");
         }
 
-        let ytmsg = `📹 *SENU MD VIDEO Dl*
+        let ytmsg = `📹 *Viruna MD VIDEO Dl*
 🎬 *Title:* ${yts.title}
 ⏳ *Duration:* ${yts.timestamp}
 👀 *Views:* ${yts.views}
 👤 *Author:* ${yts.author.name}
 🔗 *Link:* ${yts.url}
-> Powered By JesterTechX ❤️`;
+> Powered By Viruna MD ❤️`;
 
         // Send video directly with caption
         await conn.sendMessage(
@@ -89,8 +89,8 @@ cmd({
             body: "Join our WhatsApp Channel",
             mediaType: 1,
             thumbnailUrl: song.thumbnail.replace('default.jpg', 'hqdefault.jpg'),
-            sourceUrl: 'https://whatsapp.com/channel/0029Vb2OcviBFLgPzVjWhE0n',
-            mediaUrl: 'https://whatsapp.com/channel/0029Vb2OcviBFLgPzVjWhE0n',
+            sourceUrl: 'https://whatsapp.com/channel/0029Vb9w3hlEFeXkB0vqVD2Q',
+            mediaUrl: 'https://whatsapp.com/channel/0029Vb9w3hlEFeXkB0vqVD2Q',
             showAdAttribution: true,
             renderLargerThumbnail: true
         }
