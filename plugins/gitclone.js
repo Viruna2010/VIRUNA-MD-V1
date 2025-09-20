@@ -55,8 +55,8 @@ cmd({
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-          newsletterJid: '120363388320701164@newsletter',
-          newsletterName: 'JesterTechX',
+          newsletterJid: '120363418053657336@newsletter',
+          newsletterName: 'Viruna MD',
           serverMessageId: 143
         }
       }
