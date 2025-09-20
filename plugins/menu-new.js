@@ -25,7 +25,7 @@ cmd({
 │ ✓ 𝐕ᴇʀꜱɪᴏɴ : *5.0.0 Bᴇᴛᴀ*
 │ ✓ 𝐂ᴏᴍᴍᴀɴᴅꜱ : *352*
 ╰━━━━━━━━━━━━━━━┈⊷
-╭━━〔 *🧚‍♂️𝐒ᴇɴᴜ x -ᴍᴇɴᴜ🧚‍♂️*  ━┈⊷
+╭━━〔 *🧚‍♂️Viruna MD -ᴍᴇɴᴜ🧚‍♂️*  ━┈⊷
 ││❯❯ 01 *𝐃ᴏᴡɴʟᴏᴀᴅ ᴍᴇɴᴜ*
 ││❯❯ 02 *𝐆ʀᴏᴜᴘ ᴍᴇɴᴜ*
 ││❯❯ 03 *𝐅ᴜɴ ᴍᴇɴᴜ*
@@ -44,7 +44,7 @@ cmd({
             forwardingScore: 999,
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
-                newsletterJid: '120363388320701164@newsletter',
+                newsletterJid: '120363418053657336@newsletter',
                 newsletterName: config.OWNER_NAME,
                 serverMessageId: 143
             }
@@ -56,7 +56,7 @@ cmd({
                 return await conn.sendMessage(
                     from,
                     {
-                        image: { url: config.MENU_IMAGE_URL || 'https://i.ibb.co/bjPrbF84/3174.jpg' },
+                        image: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/1i675r.jpg' },
                         caption: menuCaption,
                         contextInfo: contextInfo
                     },
