@@ -32,7 +32,7 @@ cmd({
       + `┃🎥 *Videos:* ${yt.video_count}\n`
       + `┃🔗 *Channel Link:* (${yt.channel})\n`
       + `╰━━━⪼\n\n`
-      + `🔹 *Powered by JesterTechX*`;
+      + `🔹 *Powered by Viruna MD*`;
 
     await conn.sendMessage(from, {
       image: { url: yt.avatar },
