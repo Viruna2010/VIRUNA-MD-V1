@@ -2,6 +2,7 @@ const { cmd } = require('../command');
 const os = require("os");
 const { runtime } = require('../lib/functions');
 const config = require('../config');
+const fs = require("fs");
 
 cmd({
     pattern: "alive",
@@ -27,6 +28,7 @@ async (conn, mek, m, { from, sender, reply }) => {
 ╰────────────────────◉
 > ${config.DESCRIPTION}`;
 
+        // Send status with image
         await conn.sendMessage(from, {
             image: { url: config.MENU_IMAGE_URL },
             caption: status,
@@ -41,6 +43,18 @@ async (conn, mek, m, { from, sender, reply }) => {
                 }
             }
         }, { quoted: mek });
+
+        // Send voice (alive.ogg should be inside ./media folder)
+        const voicePath = "./media/alive.ogg";
+        if (fs.existsSync(voicePath)) {
+            await conn.sendMessage(from, {
+                audio: { url: voicePath },
+                mimetype: "audio/ogg; codecs=opus",
+                ptt: true // make it a voice note
+            }, { quoted: mek });
+        } else {
+            console.warn("⚠️ Voice file not found:", voicePath);
+        }
 
     } catch (e) {
         console.error("Alive Error:", e);
