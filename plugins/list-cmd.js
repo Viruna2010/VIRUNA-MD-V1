@@ -54,7 +54,7 @@ cmd({
 
             cmds.forEach(c => {
                 menuText += `┃▸📄 COMMAND: .${c.pattern}\n`
-                menuText += `┃▸❕ ${c.desc || 'No description available'}\n`
+                menuText += `┃▸❕ ${c.desc || 'Viruna MD Created by Viruna Randinu'}\n`
                 if (c.alias && c.alias.length > 0) {
                     menuText += `┃▸🔹 Aliases: ${c.alias.map(a => `.${a}`).join(', ')}\n`
                 }
@@ -73,7 +73,7 @@ cmd({
         await conn.sendMessage(
             from,
             {
-                image: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/7zfdcq.jpg' },
+                image: { url: config.MENU_IMAGE_URL || 'https://files.catbox.moe/1i675r.jpg' },
                 caption: menuText,
                 contextInfo: {
                     mentionedJid: [m.sender],
