@@ -75,7 +75,7 @@ cmd({
 
     await conn.sendMessage(m.chat, {
       image: imageBuffer,
-      caption: `> *Powered by JesterTechX*`
+      caption: `> *Powered by Viruna MD*`
     });
 
   } catch (error) {
