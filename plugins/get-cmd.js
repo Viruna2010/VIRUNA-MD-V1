@@ -39,19 +39,19 @@ ${truncatedCode}
 \`\`\`
 ╰──────────⊷  
 ⚡ Full file sent below 📂  
-Powered By *JesterTechX* 💜`;
+Powered By *Viruna MD* 💜`;
 
         // Send image with truncated source code
         await conn.sendMessage(from, { 
-            image: { url: `https://files.catbox.moe/7zfdcq.jpg` },  // Image URL
+            image: { url: `https://files.catbox.moe/1i675r.jpg` },  // Image URL
             caption: formattedCode,
             contextInfo: {
                 mentionedJid: [m.sender],
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363388320701164@newsletter',
-                    newsletterName: 'JesterTechX',
+                    newsletterJid: '120363418053657336@newsletter',
+                    newsletterName: 'Viruna MD',
                     serverMessageId: 143
                 }
             }
