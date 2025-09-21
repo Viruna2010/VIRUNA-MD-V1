@@ -14,7 +14,7 @@
   </a>
 </p>
 
-<a><img src='https://files.catbox.moe/cjcyer.jpg'/></a>
+<a><img src='https://files.catbox.moe/1i675r.jpg'/></a>
 <h1 align="center"> AV-Tech MD </h1> 
 <p align="center">AV-Tech MD made for people, on Earth </p>
 
