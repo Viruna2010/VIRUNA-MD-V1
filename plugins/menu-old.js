@@ -128,15 +128,15 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         await conn.sendMessage(
             from,
             {
-                image: { url: `https://files.catbox.moe/3y5w8z.jpg` },
+                image: { url: `https://files.catbox.moe/1i675r.jpg` },
                 caption: dec,
                 contextInfo: {
                     mentionedJid: [m.sender],
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363388320701164@newsletter',
-                        newsletterName: "JesterTechX",
+                        newsletterJid: '120363418053657336@newsletter',
+                        newsletterName: "Viruna MD",
                         serverMessageId: 143
                     }
                 }
@@ -194,15 +194,15 @@ async (conn, mek, m, { from, quoted, reply }) => {
         await conn.sendMessage(
             from,
             {
-                image: { url: `https://files.catbox.moe/3y5w8z.jpg` },
+                image: { url: `https://files.catbox.moe/1i675r.jpg` },
                 caption: dec,
                 contextInfo: {
                     mentionedJid: [m.sender],
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363388320701164@newsletter',
-                        newsletterName: 'JesterTechX',
+                        newsletterJid: 'https://files.catbox.moe/1i675r.jpg',
+                        newsletterName: 'Viruna MD',
                         serverMessageId: 144
                     }
                 }
@@ -277,7 +277,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         await conn.sendMessage(
             from,
             {
-                image: { url: `https://files.catbox.moe/3y5w8z.jpg` },
+                image: { url: `https://files.catbox.moe/1i675r.jpg` },
                 caption: dec,
                 contextInfo: {
                     mentionedJid: [m.sender],
