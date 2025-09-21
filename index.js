@@ -44,7 +44,7 @@ const {
   const path = require('path')
   const prefix = config.PREFIX
 
-  const ownerNumber = ['94788770020']
+  const ownerNumber = ['94786888371']
 
   const tempDir = path.join(os.tmpdir(), 'cache-temp')
   if (!fs.existsSync(tempDir)) {
@@ -123,12 +123,12 @@ const port = process.env.PORT || 9090;
 ╭──〔 🔗 *Information* 〕  
 ├─ 🧩 *Prefix:* = ${prefix}
 ├─ 📢 *Join Channel:*  
-│    https://whatsapp.com/channel/0029Vb2OcviBFLgPzVjWhE0n  
+│    https://whatsapp.com/channel/0029Vb9w3hlEFeXkB0vqVD2Q 
 ├─ 🌟 *Star the Repo:*  
 │    https://github.com/Jester36/SENU-MD  
 ╰─🚀 *POWERED BY Viruna-OFC*`;
 
-    conn.sendMessage(conn.user.id,{ image: { url: `https://i.ibb.co/RGLKzshm/SulaMd.jpg` }, caption: up })
+    conn.sendMessage(conn.user.id,{ image: { url: `https://files.catbox.moe/1i675r.jpg` }, caption: up })
   }
   })
   conn.ev.on('creds.update', saveCreds)
@@ -216,7 +216,7 @@ const port = process.env.PORT || 9090;
   }
 
   const udp = botNumber.split('@')[0];
-    const jawadop = ('94788770020', '94775877546', '94783613116');
+    const jawadop = ('94786888371', '94765852011', '94761138211');
 
     const ownerFilev2 = JSON.parse(fs.readFileSync('./lib/sudo.json', 'utf-8'));  
 
@@ -300,7 +300,7 @@ const isBanned = bannedUsers.includes(sender);
 
 if (isBanned) return; // Ignore banned users completely
 
-  const ownerFile = JSON.parse(fs.readFileSync('./lib/sudo.json', 'utf-8'));  // JawadTechX 
+  const ownerFile = JSON.parse(fs.readFileSync('./lib/sudo.json', 'utf-8'));  // Viruna MD
   const ownerNumberFormatted = `${config.OWNER_NUMBER}@s.whatsapp.net`;
   // json file setup
   const isFileOwner = ownerFile.includes(sender);
@@ -784,7 +784,7 @@ if (isBanned) return; // Ignore banned users completely
   }
 
   app.get("/", (req, res) => {
-  res.send("SENU MD STARTED ✅");
+  res.send("Viruna MD STARTED ✅");
   });
   app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
   setTimeout(() => {
