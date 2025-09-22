@@ -1,8 +1,8 @@
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=100&pause=1000&color=FF033E&center=true&width=1000&height=200&lines=AV-Tech MD-BOT" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=100&pause=1000&color=FF033E&center=true&width=1000&height=200&lines=Viruna MD-BOT" alt="Typing SVG" /></a>
   </p>
 
 <p align="center">
-  <h1 align="center">AV-Tech MD 3.0</h1>
+  <h1 align="center">Viruna MD 3.0</h1>
 </p>
 
 > **`Updated` The Version 3.0**
@@ -10,13 +10,13 @@
 ---
 <p align="center">
   <a href="https://github.com/Awais-star-a11y">
-    <img src="http://readme-typing-svg.herokuapp.com?color=FF0000&center=true&vCenter=true&multiline=false&lines=AV-Tech MD-+v3.0+MultiDevice;Developed+by+AVTechMd;Give+star+and+forks+this+Repo+🌟" alt="AVTech110Readme">
+    <img src="http://readme-typing-svg.herokuapp.com?color=FF0000&center=true&vCenter=true&multiline=false&lines=AV-Tech MD-+v3.0+MultiDevice;Developed+by+AVTechMd;Give+star+and+forks+this+Repo+🌟" alt="VirunaMD110Readme">
   </a>
 </p>
 
 <a><img src='https://files.catbox.moe/1i675r.jpg'/></a>
-<h1 align="center"> AV-Tech MD </h1> 
-<p align="center">AV-Tech MD made for people, on Earth </p>
+<h1 align="center"> Viruna MD </h1> 
+<p align="center">Viruna MD made for people, on Earth </p>
 
  
    
