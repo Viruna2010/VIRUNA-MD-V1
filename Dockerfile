@@ -1,4 +1,4 @@
- Use the LTS version of Node.js as the base image
+# Use the LTS version of Node.js as the base image
 FROM node:lts-buster
 
 # Install necessary packages: ffmpeg, imagemagick, webp
