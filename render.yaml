@@ -1,0 +1,16 @@
+# render.yaml for VIRUNA-MD bot
+services:
+  - type: web
+    name: viruna-md-bot
+    env: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    plan: free
+    port: 10000  # must match the EXPOSE in your Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BOT_TOKEN
+        value: ""  # add your bot token here
+      - key: OTHER_ENV
+        value: ""  # add other environment variables if needed
