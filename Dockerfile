@@ -1,7 +1,7 @@
-# Use LTS Node.js on Debian Bullseye
-FROM node:lts-bullseye
+ Use the LTS version of Node.js as the base image
+FROM node:lts-buster
 
-# Install necessary packages
+# Install necessary packages: ffmpeg, imagemagick, webp
 RUN apt-get update && \
     apt-get install -y \
     ffmpeg \
@@ -10,26 +10,20 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package files
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies including PM2
+RUN npm install && npm install pm2 -g
 
-# Copy all project files
+# Copy all local files to the working directory
 COPY . .
 
-# Create folder for persistent session
-RUN mkdir -p /usr/src/app/session
-
-# Expose port if needed (optional for pure WhatsApp bot)
+# Expose port 3000
 EXPOSE 3000
 
-# Set environment variable for session path
-ENV SESSION_FILE=/usr/src/app/session/session.json
-
-# Start bot directly using Node.js
-CMD ["node", "index.js"]
+# Start the application using PM2 in runtime mode
+CMD ["pm2-runtime", "index.js", "--", "--server"]
