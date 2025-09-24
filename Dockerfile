@@ -16,14 +16,20 @@ WORKDIR /usr/src/app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies and PM2 globally
-RUN npm install && npm install pm2 -g
+# Install dependencies
+RUN npm install
 
 # Copy all project files
 COPY . .
 
-# Expose port (change if your bot uses different port)
+# Create folder for persistent session
+RUN mkdir -p /usr/src/app/session
+
+# Expose port if needed (optional for pure WhatsApp bot)
 EXPOSE 3000
 
-# Start bot using PM2 runtime
-CMD ["pm2-runtime", "index.js"]
+# Set environment variable for session path
+ENV SESSION_FILE=/usr/src/app/session/session.json
+
+# Start bot directly using Node.js
+CMD ["node", "index.js"]
