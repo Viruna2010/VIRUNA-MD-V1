@@ -1,7 +1,7 @@
-# Use the LTS version of Node.js as the base image
-FROM node:lts-buster
+# Use LTS Node.js on Debian Bullseye
+FROM node:lts-bullseye
 
-# Install necessary packages: ffmpeg, imagemagick, webp
+# Install necessary packages
 RUN apt-get update && \
     apt-get install -y \
     ffmpeg \
@@ -10,20 +10,20 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists/*
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package files
 COPY package*.json ./
 
-# Install dependencies including PM2
+# Install dependencies and PM2 globally
 RUN npm install && npm install pm2 -g
 
-# Copy all local files to the working directory
+# Copy all project files
 COPY . .
 
-# Expose port 3000
+# Expose port (change if your bot uses different port)
 EXPOSE 3000
 
-# Start the application using PM2 in runtime mode
-CMD ["pm2-runtime", "index.js", "--", "--server"]
+# Start bot using PM2 runtime
+CMD ["pm2-runtime", "index.js"]
