@@ -107,7 +107,7 @@ const port = process.env.PORT || 9090;
   const path = require('path');
   fs.readdirSync("./plugins/").forEach((plugin) => {
   if (path.extname(plugin).toLowerCase() == ".js") {
-  require("./plugins/" + plugin);
+   require(__dirname + "/plugins/" + plugin)(conn) //;
   }
   });
   console.log('Plugins installed successful ✅')
