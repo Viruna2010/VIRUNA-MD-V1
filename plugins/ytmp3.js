@@ -1,21 +1,31 @@
+// ytdl.js
+const axios = require('axios');
+
 async function ytdl(url) {
     try {
-        const apiUrl = `https://api.arabdullah.top/api/ytmp3?url=${encodeURIComponent(url)}&apiKey=AIzaSyB16u905w4V702Xvq81i0b2J9iX43mR85c`;
-        const res = await fetch(apiUrl);
-        const data = await res.json();
+        // 🌟 Widipe API (no key needed)
+        const apiUrl = `https://widipe.com/download/ytmp3?url=${encodeURIComponent(url)}`;
 
-        // Debugging log (to see full API response)
-        console.log("YT API Response:", data);
+        const response = await axios.get(apiUrl);
+        const data = response.data;
 
-        const dl = data?.result?.download_url || data?.result?.downloadUrl || data?.result?.url;
-        if (!dl) throw new Error("Failed to get download link");
+        if (!data || !data.result || !data.result.download_url) {
+            throw new Error("Failed to get download link");
+        }
 
         return {
-            videoUrl: dl,
-            title: data?.result?.title || "Unknown Title"
+            title: data.result.title || "Unknown Title",
+            downloadUrl: data.result.download_url
         };
     } catch (err) {
-        console.error(err);
+        console.error("YTDL Error:", err.message);
         return { error: err.message };
     }
 }
+
+// Example usage
+ytdl("https://youtube.com/watch?v=q763OBiwDKg")
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+module.exports = ytdl;
