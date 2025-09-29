@@ -1,90 +1,46 @@
-const config = require('../config');
-const { cmd } = require('../command');
-const DY_SCRAP = require('@dark-yasiya/scrap');
-const dy_scrap = new DY_SCRAP();
+const { 
+  default: makeWASocket, 
+  useMultiFileAuthState, 
+  generateWAMessageFromContent,
+  prepareWAMessageMedia,
+  proto 
+} = require('@whiskeysockets/baileys');
+const axios = require('axios');
+const https = require('https');
 
-function replaceYouTubeID(url) {
-    const regex = /(?:youtube\.com\/(?:.*v=|.*\/)|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-}
-
-cmd({
-    pattern: "play3",
-    alias: ["mp3", "ytmp3"],
-    react: "🎵",
-    desc: "Download Ytmp3",
-    category: "download",
-    use: ".play3 <Text or YT URL>",
-    filename: __filename
-}, async (conn, m, mek, { from, q, reply }) => {
+module.exports = {
+  name: 'ytdl',
+  async execute(conn, message) {
     try {
-        if (!q) return await reply("❌ Please provide a Query or Youtube URL!");
+      const url = message.text.split(' ')[1];
+      if (!url) return conn.sendMessage(message.key.remoteJid, { text: 'Please provide a YouTube URL!' });
 
-        let id = q.startsWith("https://") ? replaceYouTubeID(q) : null;
+      // Call external API safely
+      const response = await axios.post(
+        'https://api.grabtheclip.com/submit-download',
+        { url, height: 0, media_type: 'audio' },
+        { httpsAgent: new https.Agent({ rejectUnauthorized: false }) } // Heroku TLS fix
+      );
 
-        if (!id) {
-            const searchResults = await dy_scrap.ytsearch(q);
-            if (!searchResults?.results?.length) return await reply("❌ No results found!");
-            id = searchResults.results[0].videoId;
-        }
+      if (!response.data || !response.data.download) {
+        return conn.sendMessage(message.key.remoteJid, { text: 'Failed to fetch download link.' });
+      }
 
-        const data = await dy_scrap.ytsearch(`https://youtube.com/watch?v=${id}`);
-        if (!data?.results?.length) return await reply("❌ Failed to fetch video!");
+      const audioUrl = response.data.download[0].url;
 
-        const { url, title, image, timestamp, ago, views, author } = data.results[0];
+      // Prepare WhatsApp audio message
+      const media = await prepareWAMessageMedia({ audio: { url: audioUrl }, mimetype: 'audio/mpeg' }, { upload: conn.uploadMedia });
+      const msg = generateWAMessageFromContent(
+        message.key.remoteJid,
+        proto.Message.fromObject({ audioMessage: media.audioMessage }),
+        { quoted: message }
+      );
 
-        let info = `🎵 *YouTube MP3 Download* 🎵\n\n` +
-            `*Title:* ${title || "Unknown"}\n` +
-            `*Duration:* ${timestamp || "Unknown"}\n` +
-            `*Views:* ${views || "Unknown"}\n` +
-            `*Release Ago:* ${ago || "Unknown"}\n` +
-            `*Author:* ${author?.name || "Unknown"}\n` +
-            `*Url:* ${url || "Unknown"}\n\n` +
-            `Reply with:\n` +
-            `1.1 Audio 🎵\n` +
-            `1.2 Document 📁\n\n` +
-            `${config.FOOTER || "Viruna MD"}`;
+      await conn.relayMessage(message.key.remoteJid, msg.message, { messageId: msg.key.id });
 
-        const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
-        const messageID = sentMsg.key.id;
-
-        conn.ev.on('messages.upsert', async (messageUpdate) => { 
-            try {
-                const mekInfo = messageUpdate?.messages[0];
-                if (!mekInfo?.message) return;
-
-                const userReply = mekInfo?.message?.conversation || mekInfo?.message?.extendedTextMessage?.text;
-                const isReplyToSentMsg = mekInfo?.message?.extendedTextMessage?.contextInfo?.stanzaId === messageID;
-                if (!isReplyToSentMsg) return;
-
-                let type;
-                if (userReply.trim() === "1.1") {
-                    await conn.sendMessage(from, { text: "⏳ Processing Audio..." }, { quoted: mek });
-                    const response = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
-                    type = { audio: { url: response.result.download.url }, mimetype: "audio/mpeg" };
-
-                } else if (userReply.trim() === "1.2") {
-                    await conn.sendMessage(from, { text: "⏳ Processing Document..." }, { quoted: mek });
-                    const response = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
-                    type = { document: { url: response.result.download.url, fileName: `${title}.mp3`, mimetype: "audio/mpeg", caption: title } };
-
-                } else { 
-                    return await reply("❌ Invalid choice! Reply with 1.1 or 1.2.");
-                }
-
-                await conn.sendMessage(from, type, { quoted: mek });
-                await conn.sendMessage(from, { text: '✅ Media Upload Successful ✅', edit: mek.key });
-
-            } catch (error) {
-                console.error(error);
-                await reply(`❌ Error while processing: ${error.message || "Error!"}`);
-            }
-        });
-
-    } catch (error) {
-        console.error(error);
-        await reply(`❌ Failed: ${error.message || "Unknown Error"}`);
+    } catch (err) {
+      console.error(err);
+      conn.sendMessage(message.key.remoteJid, { text: 'Error occurred while downloading audio.' });
     }
-});
-
+  }
+};
