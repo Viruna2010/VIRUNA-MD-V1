@@ -17,7 +17,7 @@ AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || "*SEEN YOUR STATUS BY Viruna-MD 
 // set the auto reply massage on status reply  
 ANTI_DELETE: process.env.ANTI_DELETE || "true",
 // set true false for anti delete     
-ANTI_DEL_PATH: process.env.ANTI_DEL_PATH || "same", 
+ANTI_DEL_PATH: process.env.ANTI_DEL_PATH || "inbox", 
 // change it to 'same' if you want to resend deleted message in same chat     
 WELCOME: process.env.WELCOME || "false",
 // true if want welcome and goodbye msg in groups    
