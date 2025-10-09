@@ -5,6 +5,9 @@ const ytdl = require('ytdl-core');
 const fs = require('fs');
 const path = require('path');
 
+// Fix for Heroku SSL issues
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 cmd({
     pattern: "yt2",
     alias: ["play2", "music"],
@@ -41,7 +44,6 @@ cmd({
         const sentMsg = await conn.sendMessage(from, { text: infoMsg }, { quoted: mek });
         const messageID = sentMsg.key.id;
 
-        // Listen for user reply
         const listener = async (update) => {
             try {
                 const mekReply = update?.messages?.[0];
@@ -59,7 +61,15 @@ cmd({
                 await reply("⏳ Downloading audio...");
 
                 const tempFile = path.join(__dirname, `${Date.now()}.mp3`);
-                const audioStream = ytdl(videoUrl, { filter: 'audioonly', quality: 'highestaudio' });
+                const audioStream = ytdl(videoUrl, {
+                    filter: 'audioonly',
+                    quality: 'highestaudio',
+                    requestOptions: {
+                        strictSSL: false, // Fix Heroku SSL issue
+                        headers: { "User-Agent": "Mozilla/5.0" }
+                    }
+                });
+
                 const writeStream = fs.createWriteStream(tempFile);
                 audioStream.pipe(writeStream);
 
