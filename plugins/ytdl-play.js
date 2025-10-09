@@ -1,7 +1,6 @@
 const config = require('../config');
 const { cmd } = require('../command');
 const yts = require('yt-search');
-const fetch = require('node-fetch'); // npm install node-fetch
 
 cmd({
     pattern: "yt2",
@@ -16,13 +15,12 @@ cmd({
         if (!q) return await reply("❌ Please provide a song name or YouTube URL!");
 
         let videoUrl, title;
-
-        // Check if input is a YouTube URL
+        
+        // Check if it's a URL
         if (q.match(/(youtube\.com|youtu\.be)/)) {
             videoUrl = q;
-            const videoId = q.split(/v=|\/|=/).pop();
-            const videoInfo = await yts({ videoId });
-            title = videoInfo?.title || "Unknown Title";
+            const videoInfo = await yts({ videoId: q.split(/[=/]/).pop() });
+            title = videoInfo.title;
         } else {
             // Search YouTube
             const search = await yts(q);
@@ -33,23 +31,15 @@ cmd({
 
         await reply("⏳ Downloading audio...");
 
-        // Use LAKIYA API
-        const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${encodeURIComponent(videoUrl)}&type=mp3`;
-        const headers = {
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "application/json"
-        };
-
-        const response = await fetch(apiUrl, { headers });
+        // Use API to get audio
+        const apiUrl = `https://api.davidcyriltech.my.id/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
+        const response = await fetch(apiUrl);
         const data = await response.json();
 
-        if (!data || !data.url) {
-            return await reply("❌ Failed to get MP3 from API!");
-        }
+        if (!data.success) return await reply("❌ Failed to download audio!");
 
-        // Send audio to WhatsApp
         await conn.sendMessage(from, {
-            audio: { url: data.url },
+            audio: { url: data.result.download_url },
             mimetype: 'audio/mpeg',
             ptt: false
         }, { quoted: mek });
@@ -61,3 +51,4 @@ cmd({
         await reply(`❌ Error: ${error.message}`);
     }
 });
+

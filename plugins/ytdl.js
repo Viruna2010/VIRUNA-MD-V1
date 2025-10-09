@@ -1,8 +1,7 @@
 const config = require('../config');
 const { cmd } = require('../command');
-const yts = require('yt-search');
-const fetch = require('node-fetch');
-const https = require('https');
+const DY_SCRAP = require('@dark-yasiya/scrap');
+const dy_scrap = new DY_SCRAP();
 
 function replaceYouTubeID(url) {
     const regex = /(?:youtube\.com\/(?:.*v=|.*\/)|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
@@ -16,73 +15,88 @@ cmd({
     react: "🎵",
     desc: "Download Ytmp3",
     category: "download",
-    use: ".play3 <Text or YT URL>",
+    use: ".song <Text or YT URL>",
     filename: __filename
 }, async (conn, m, mek, { from, q, reply }) => {
     try {
-        if (!q) return await reply("❌ Please provide a Query or YouTube URL!");
+        if (!q) return await reply("❌ Please provide a Query or Youtube URL!");
 
-        // Get video URL
-        let videoUrl = q.startsWith("https://") ? q : null;
-        if (!videoUrl) {
-            const searchResults = await yts(q);
-            if (!searchResults?.videos?.length) return await reply("❌ No results found!");
-            videoUrl = searchResults.videos[0].url;
+        let id = q.startsWith("https://") ? replaceYouTubeID(q) : null;
+
+        if (!id) {
+            const searchResults = await dy_scrap.ytsearch(q);
+            if (!searchResults?.results?.length) return await reply("❌ No results found!");
+            id = searchResults.results[0].videoId;
         }
 
-        const videoId = replaceYouTubeID(videoUrl);
-        const videoInfo = await yts({ videoId });
-        const title = videoInfo?.title || "Unknown";
-        const image = videoInfo?.thumbnail || null;
-        const duration = videoInfo?.timestamp || "Unknown";
+        const data = await dy_scrap.ytsearch(`https://youtube.com/watch?v=${id}`);
+        if (!data?.results?.length) return await reply("❌ Failed to fetch video!");
 
-        // Send info message
-        const info = `🎵 *YouTube MP3 Download* 🎵\n\n` +
-            `*Title:* ${title}\n` +
-            `*Duration:* ${duration}\n` +
-            `*Url:* ${videoUrl}\n\n` +
-            `Reply with:\n` +
-            `1.1 Audio 🎵\n` +
-            `1.2 Document 📁\n\n` +
-            `${config.FOOTER || "Viruna MD"}`;
+        const { url, title, image, timestamp, ago, views, author } = data.results[0];
+
+        let info = `🍄 *SENU-MD SONG DL* 🍄\n\n` +
+            `🎵 *Title:* ${title || "Unknown"}\n` +
+            `⏳ *Duration:* ${timestamp || "Unknown"}\n` +
+            `👀 *Views:* ${views || "Unknown"}\n` +
+            `🌏 *Release Ago:* ${ago || "Unknown"}\n` +
+            `👤 *Author:* ${author?.name || "Unknown"}\n` +
+            `🖇 *Url:* ${url || "Unknown"}\n\n` +
+            `🔽 *Reply with your choice:*\n` +
+            `1.1 *Audio Type* 🎵\n` +
+            `1.2 *Document Type* 📁\n\n` +
+            `${config.FOOTER || "𓆩JesterTechX𓆪"}`;
 
         const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
+        const messageID = sentMsg.key.id;
+        await conn.sendMessage(from, { react: { text: '🎶', key: sentMsg.key } });
 
-        // Wait for user reply once
-        const filter = (update) => {
-            const msg = update?.messages?.[0];
-            if (!msg?.message) return false;
-            const replyText = msg?.message?.conversation || msg?.message?.extendedTextMessage?.text;
-            const isReplyToSentMsg = msg?.message?.extendedTextMessage?.contextInfo?.stanzaId === sentMsg.key.id;
-            return isReplyToSentMsg && (replyText === "1.1" || replyText === "1.2");
-        };
+        // Listen for user reply only once!
+        conn.ev.on('messages.upsert', async (messageUpdate) => { 
+            try {
+                const mekInfo = messageUpdate?.messages[0];
+                if (!mekInfo?.message) return;
 
-        const collected = await conn.ev.wait('messages.upsert', { filter, max: 1, timeout: 60000 });
-        const mekReply = collected.messages[0];
-        const userReply = mekReply?.message?.conversation || mekReply?.message?.extendedTextMessage?.text;
+                const messageType = mekInfo?.message?.conversation || mekInfo?.message?.extendedTextMessage?.text;
+                const isReplyToSentMsg = mekInfo?.message?.extendedTextMessage?.contextInfo?.stanzaId === messageID;
 
-        // Fetch MP3 from LAKIYA API with SSL bypass
-        const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${encodeURIComponent(videoUrl)}&type=mp3`;
-        const agent = new https.Agent({ rejectUnauthorized: false });
-        const headers = { "User-Agent": "Mozilla/5.0", "Accept": "application/json" };
-        const response = await fetch(apiUrl, { headers, agent });
-        const data = await response.json();
+                if (!isReplyToSentMsg) return;
 
-        if (!data?.url) return await reply("❌ Failed to fetch MP3 from API!");
+                let userReply = messageType.trim();
+                let msg;
+                let type;
+                let response;
+                
+                if (userReply === "1.1") {
+                    msg = await conn.sendMessage(from, { text: "⏳ Processing..." }, { quoted: mek });
+                    response = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
+                    let downloadUrl = response?.result?.download?.url;
+                    if (!downloadUrl) return await reply("❌ Download link not found!");
+                    type = { audio: { url: downloadUrl }, mimetype: "audio/mpeg" };
+                    
+                } else if (userReply === "1.2") {
+                    msg = await conn.sendMessage(from, { text: "⏳ Processing..." }, { quoted: mek });
+                    const response = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
+                    let downloadUrl = response?.result?.download?.url;
+                    if (!downloadUrl) return await reply("❌ Download link not found!");
+                    type = { document: { url: downloadUrl }, fileName: `${title}.mp3`, mimetype: "audio/mpeg", caption: title };
+                    
+                } else { 
+                    return await reply("❌ Invalid choice! Reply with 1.1 or 1.2.");
+                }
 
-        // Send Audio or Document based on reply
-        let type;
-        if (userReply.trim() === "1.1") {
-            type = { audio: { url: data.url, mimetype: "audio/mpeg" } };
-        } else {
-            type = { document: { url: data.url, fileName: `${title}.mp3`, mimetype: "audio/mpeg", caption: title } };
-        }
+                await conn.sendMessage(from, type, { quoted: mek });
+                await conn.sendMessage(from, { text: '✅ Media Upload Successful ✅', edit: msg.key });
 
-        await conn.sendMessage(from, type, { quoted: mek });
-        await conn.sendMessage(from, { text: '✅ Media Upload Successful ✅', edit: mek.key });
+            } catch (error) {
+                console.error(error);
+                await reply(`❌ *An error occurred while processing:* ${error.message || "Error!"}`);
+            }
+        });
 
     } catch (error) {
         console.error(error);
-        await reply(`❌ Error: ${error.message || "Unknown Error"}`);
+        await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
+        await reply(`❌ *An error occurred:* ${error.message || "Error!"}`);
     }
 });
+                               
