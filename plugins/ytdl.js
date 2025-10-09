@@ -1,7 +1,7 @@
 const config = require('../config');
 const { cmd } = require('../command');
 const yts = require('yt-search');
-const fetch = require('node-fetch'); // npm install node-fetch
+const fetch = require('node-fetch');
 const https = require('https');
 
 function replaceYouTubeID(url) {
@@ -22,7 +22,7 @@ cmd({
     try {
         if (!q) return await reply("❌ Please provide a Query or YouTube URL!");
 
-        // Determine video URL
+        // Get video URL
         let videoUrl = q.startsWith("https://") ? q : null;
         if (!videoUrl) {
             const searchResults = await yts(q);
@@ -36,7 +36,7 @@ cmd({
         const image = videoInfo?.thumbnail || null;
         const duration = videoInfo?.timestamp || "Unknown";
 
-        // Send info message with reply options
+        // Send info message
         const info = `🎵 *YouTube MP3 Download* 🎵\n\n` +
             `*Title:* ${title}\n` +
             `*Duration:* ${duration}\n` +
@@ -48,7 +48,7 @@ cmd({
 
         const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
 
-        // Wait for user reply once (max 60 seconds)
+        // Wait for user reply once
         const filter = (update) => {
             const msg = update?.messages?.[0];
             if (!msg?.message) return false;
@@ -61,16 +61,16 @@ cmd({
         const mekReply = collected.messages[0];
         const userReply = mekReply?.message?.conversation || mekReply?.message?.extendedTextMessage?.text;
 
-        // Call LAKIYA API with SSL-safe agent
+        // Fetch MP3 from LAKIYA API with SSL bypass
         const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${encodeURIComponent(videoUrl)}&type=mp3`;
-        const agent = new https.Agent({ rejectUnauthorized: false }); // SSL bypass if needed
+        const agent = new https.Agent({ rejectUnauthorized: false });
         const headers = { "User-Agent": "Mozilla/5.0", "Accept": "application/json" };
         const response = await fetch(apiUrl, { headers, agent });
         const data = await response.json();
 
         if (!data?.url) return await reply("❌ Failed to fetch MP3 from API!");
 
-        // Send audio or document based on user choice
+        // Send Audio or Document based on reply
         let type;
         if (userReply.trim() === "1.1") {
             type = { audio: { url: data.url, mimetype: "audio/mpeg" } };
