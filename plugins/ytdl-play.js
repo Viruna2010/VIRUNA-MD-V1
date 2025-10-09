@@ -33,7 +33,7 @@ cmd({
         await reply("⏳ Downloading audio...");
 
         // API call
-        const apiUrl = `https://d.ymcdn.org/api/v1/init?p=y&23=1llum1n471&_=${Math.random()}`;
+        const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${url}&type=mp3`;
         const headers = {
             "User-Agent": "Mozilla/5.0",
             "Accept": "application/json"
