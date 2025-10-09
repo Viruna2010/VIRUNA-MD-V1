@@ -1,119 +1,120 @@
 const {
   default: makeWASocket,
-    useMultiFileAuthState,
-    DisconnectReason,
-    jidNormalizedUser,
-    isJidBroadcast,
-    getContentType,
-    proto,
-    generateWAMessageContent,
-    generateWAMessage,
-    AnyMessageContent,
-    prepareWAMessageMedia,
-    areJidsSameUser,
-    downloadContentFromMessage,
-    MessageRetryMap,
-    generateForwardMessageContent,
-    generateWAMessageFromContent,
-    generateMessageID, makeInMemoryStore,
-    jidDecode,
-    fetchLatestBaileysVersion,
-    Browsers
-  } = require('@whiskeysockets/baileys')
+  useMultiFileAuthState,
+  DisconnectReason,
+  jidNormalizedUser,
+  isJidBroadcast,
+  getContentType,
+  proto,
+  generateWAMessageContent,
+  generateWAMessage,
+  AnyMessageContent,
+  prepareWAMessageMedia,
+  areJidsSameUser,
+  downloadContentFromMessage,
+  MessageRetryMap,
+  generateForwardMessageContent,
+  generateWAMessageFromContent,
+  generateMessageID,
+  makeInMemoryStore,
+  jidDecode,
+  fetchLatestBaileysVersion,
+  Browsers
+} = require('@whiskeysockets/baileys')
 
+const l = console.log
+const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('./lib/functions')
+const { AntiDelDB, initializeAntiDeleteSettings, setAnti, getAnti, getAllAntiDeleteSettings, saveContact, loadMessage, getName, getChatSummary, saveGroupMetadata, getGroupMetadata, saveMessageCount, getInactiveGroupMembers, getGroupMembersMessageCount, saveMessage } = require('./data')
+const fs = require('fs')
+const ff = require('fluent-ffmpeg')
+const P = require('pino')
+const config = require('./config')
+const GroupEvents = require('./lib/groupevents');
+const qrcode = require('qrcode-terminal')
+const StickersTypes = require('wa-sticker-formatter')
+const util = require('util')
+const { sms, downloadMediaMessage, AntiDelete } = require('./lib')
+const FileType = require('file-type');
+const axios = require('axios')
+const { File } = require('megajs')
+const { fromBuffer } = require('file-type')
+const bodyparser = require('body-parser')
+const os = require('os')
+const Crypto = require('crypto')
+const path = require('path')
+const prefix = config.PREFIX
 
-  const l = console.log
-  const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('./lib/functions')
-  const { AntiDelDB, initializeAntiDeleteSettings, setAnti, getAnti, getAllAntiDeleteSettings, saveContact, loadMessage, getName, getChatSummary, saveGroupMetadata, getGroupMetadata, saveMessageCount, getInactiveGroupMembers, getGroupMembersMessageCount, saveMessage } = require('./data')
-  const fs = require('fs')
-  const ff = require('fluent-ffmpeg')
-  const P = require('pino')
-  const config = require('./config')
-  const GroupEvents = require('./lib/groupevents');
-  const qrcode = require('qrcode-terminal')
-  const StickersTypes = require('wa-sticker-formatter')
-  const util = require('util')
-  const { sms, downloadMediaMessage, AntiDelete } = require('./lib')
-  const FileType = require('file-type');
-  const axios = require('axios')
-  const { File } = require('megajs')
-  const { fromBuffer } = require('file-type')
-  const bodyparser = require('body-parser')
-  const os = require('os')
-  const Crypto = require('crypto')
-  const path = require('path')
-  const prefix = config.PREFIX
+const ownerNumber = ['94761138211']
 
-  const ownerNumber = ['94761138211']
+const tempDir = path.join(os.tmpdir(), 'cache-temp')
+if (!fs.existsSync(tempDir)) {
+  fs.mkdirSync(tempDir)
+}
 
-  const tempDir = path.join(os.tmpdir(), 'cache-temp')
-  if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir)
-  }
-
-  const clearTempDir = () => {
-      fs.readdir(tempDir, (err, files) => {
-          if (err) throw err;
-          for (const file of files) {
-              fs.unlink(path.join(tempDir, file), err => {
-                  if (err) throw err;
-              });
-          }
+const clearTempDir = () => {
+  fs.readdir(tempDir, (err, files) => {
+    if (err) throw err;
+    for (const file of files) {
+      fs.unlink(path.join(tempDir, file), err => {
+        if (err) throw err;
       });
-  }
+    }
+  });
+}
 
-  // Clear the temp directory every 5 minutes
-  setInterval(clearTempDir, 5 * 60 * 1000);
+// Clear the temp directory every 5 minutes
+setInterval(clearTempDir, 5 * 60 * 1000);
 
-  //===================SESSION-AUTH============================
+//===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-const sessdata = config.SESSION_ID.replace("IK~", '');
-const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
-filer.download((err, data) => {
-if(err) throw err
-fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
-console.log("Session downloaded ✅")
-})})}
+  if (!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
+  const sessdata = config.SESSION_ID.replace("IK~", '');
+  const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
+  filer.download((err, data) => {
+    if (err) throw err
+    fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
+      console.log("Session downloaded ✅")
+    })
+  })
+}
 
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 9090;
 
-  //=============================================
+//=============================================
 
-  async function connectToWA() {
+async function connectToWA() {
   console.log("Connecting to WhatsApp ⏳️...");
   const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/sessions/')
   var { version } = await fetchLatestBaileysVersion()
 
   const conn = makeWASocket({
-          logger: P({ level: 'silent' }),
-          printQRInTerminal: false,
-          browser: Browsers.macOS("Firefox"),
-          syncFullHistory: true,
-          auth: state,
-          version
-          })
+    logger: P({ level: 'silent' }),
+    printQRInTerminal: false,
+    browser: Browsers.macOS("Firefox"),
+    syncFullHistory: true,
+    auth: state,
+    version
+  })
 
   conn.ev.on('connection.update', (update) => {
-  const { connection, lastDisconnect } = update
-  if (connection === 'close') {
-  if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
-  connectToWA()
-  }
-  } else if (connection === 'open') {
-  console.log('🧬 Installing Plugins')
-  const path = require('path');
-  fs.readdirSync("./plugins/").forEach((plugin) => {
-  if (path.extname(plugin).toLowerCase() == ".js") {
-   require("./plugins/" + plugin);
-  }
-  });
-  console.log('Plugins installed successful ✅')
-  console.log('Bot connected to whatsapp ✅')
-
-  let up = `╭─〔 *🤖 Viruna-MD BOT* 〕  
+    const { connection, lastDisconnect } = update
+    if (connection === 'close') {
+      if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
+        connectToWA()
+      }
+    } else if (connection === 'open') {
+      console.log('🧬 Installing Plugins')
+      const path = require('path');
+      fs.readdirSync("./plugins/").forEach((plugin) => {
+        if (path.extname(plugin).toLowerCase() == ".js") {
+          require("./plugins/" + plugin);
+        }
+      });
+      console.log('Plugins installed successful ✅')
+      console.log('Bot connected to whatsapp ✅')
+      let up = `╭─〔 *🤖 Viruna-MD BOT* 〕  
 ├─▸ *Ultra Super Fast Powerfull ⚠️*  
 │     *World Best BOT Viruna-MD* 
 ╰─➤ *Your Smart WhatsApp Bot is Ready To use 🍁!*  
@@ -128,8 +129,11 @@ const port = process.env.PORT || 9090;
 │    https://github.com/Jester36/SENU-MD  
 ╰─🚀 *POWERED BY Viruna-OFC*`;
 
-    conn.sendMessage(conn.user.id,{ image: { url: `https://files.catbox.moe/1i675r.jpg` }, caption: up })
-  }
+      conn.sendMessage(conn.user.id, {
+        image: { url: `https://files.catbox.moe/1i675r.jpg` },
+        caption: up
+      })
+    }
   })
   conn.ev.on('creds.update', saveCreds)
 
@@ -143,46 +147,70 @@ const port = process.env.PORT || 9090;
       }
     }
   });
-  //============================== 
+
+  //==============================
 
   conn.ev.on("group-participants.update", (update) => GroupEvents(conn, update));	  
 
-  //=============readstatus=======
+  //============== 📞 AUTO CALL REJECT ==============
+  conn.ev.on('call', async (callData) => {
+    try {
+      const caller = callData[0].from;
+      const callId = callData[0].id;
+      const status = callData[0].status;
 
-  conn.ev.on('messages.upsert', async(mek) => {
+      if (status === 'offer') {
+        console.log(`📞 Incoming call from ${caller}, rejecting...`);
+        await conn.rejectCall(callId, caller);
+        await conn.sendMessage(caller, {
+          text: '*🚫 Please don’t call this bot!*\nYour call was automatically rejected.'
+        });
+      }
+    } catch (e) {
+      console.error('❌ Error rejecting call:', e);
+    }
+  });
+
+  //============= readstatus =======
+
+  conn.ev.on('messages.upsert', async (mek) => {
     mek = mek.messages[0]
     if (!mek.message) return
     mek.message = (getContentType(mek.message) === 'ephemeralMessage') 
-    ? mek.message.ephemeralMessage.message 
-    : mek.message;
-    //console.log("New Message Detected:", JSON.stringify(mek, null, 2));
-  if (config.READ_MESSAGE === 'true') {
-    await conn.readMessages([mek.key]);  // Mark message as read
-    console.log(`Marked message from ${mek.key.remoteJid} as read.`);
-  }
+      ? mek.message.ephemeralMessage.message 
+      : mek.message;
+
+    if (config.READ_MESSAGE === 'true') {
+      await conn.readMessages([mek.key]);  
+      console.log(`Marked message from ${mek.key.remoteJid} as read.`);
+    }
+
     if(mek.message.viewOnceMessageV2)
-    mek.message = (getContentType(mek.message) === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
+      mek.message = (getContentType(mek.message) === 'ephemeralMessage') 
+        ? mek.message.ephemeralMessage.message 
+        : mek.message
+
     if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN === "true"){
       await conn.readMessages([mek.key])
     }
-  if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true"){
-    const jawadlike = await conn.decodeJid(conn.user.id);
-    const emojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '🖤', '💚'];
-    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-    await conn.sendMessage(mek.key.remoteJid, {
-      react: {
-        text: randomEmoji,
-        key: mek.key,
-      } 
-    }, { statusJidList: [mek.key.participant, jawadlike] });
-  }                       
-  if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REPLY === "true"){
-  const user = mek.key.participant
-  const text = `${config.AUTO_STATUS_MSG}`
-  await conn.sendMessage(user, { text: text, react: { text: '💜', key: mek.key } }, { quoted: mek })
-            }
-            await Promise.all([
-              saveMessage(mek),
+
+    if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true"){
+      const jawadlike = await conn.decodeJid(conn.user.id);
+      const emojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '🖤', '💚'];
+      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      await conn.sendMessage(mek.key.remoteJid, {
+        react: { text: randomEmoji, key: mek.key },
+      }, { statusJidList: [mek.key.participant, jawadlike] });
+    }                       
+
+    if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REPLY === "true"){
+      const user = mek.key.participant
+      const text = `${config.AUTO_STATUS_MSG}`
+      await conn.sendMessage(user, { text: text, react: { text: '💜', key: mek.key } }, { quoted: mek })
+    }
+
+    await Promise.all([ saveMessage(mek) ]);
+
             ]);
   const m = sms(conn, mek)
   const type = getContentType(mek.message)
