@@ -1,6 +1,8 @@
 const config = require('../config');
 const { cmd } = require('../command');
 const yts = require('yt-search');
+const fetch = require('node-fetch');
+const https = require('https');
 
 cmd({
     pattern: "yt2",
@@ -20,7 +22,7 @@ cmd({
         if (q.match(/(youtube\.com|youtu\.be)/)) {
             videoUrl = q;
             const videoInfo = await yts({ videoId: q.split(/[=/]/).pop() });
-            title = videoInfo.title;
+            title = videoInfo?.title || "Unknown";
         } else {
             // Search YouTube
             const search = await yts(q);
@@ -31,16 +33,16 @@ cmd({
 
         await reply("⏳ Downloading audio...");
 
-        // Use API to get audio
-        const apiUrl = `https://api.davidcyriltech.my.id/download/ytmp3?url=${encodeURIComponent(videoUrl)}`;
-        const response = await fetch(apiUrl);
+        // Call a reliable API (SSL bypass if necessary)
+        const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${encodeURIComponent(videoUrl)}&type=mp3`;
+        const agent = new https.Agent({ rejectUnauthorized: false });
+        const response = await fetch(apiUrl, { agent });
         const data = await response.json();
 
-        if (!data.success) return await reply("❌ Failed to download audio!");
+        if (!data?.url) return await reply("❌ Failed to download audio!");
 
         await conn.sendMessage(from, {
-            audio: { url: data.result.download_url },
-            mimetype: 'audio/mpeg',
+            audio: { url: data.url, mimetype: 'audio/mpeg' },
             ptt: false
         }, { quoted: mek });
 
@@ -51,4 +53,3 @@ cmd({
         await reply(`❌ Error: ${error.message}`);
     }
 });
-
