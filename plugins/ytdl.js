@@ -1,7 +1,7 @@
 const config = require('../config');
 const { cmd } = require('../command');
-const DY_SCRAP = require('@dark-yasiya/scrap');
-const dy_scrap = new DY_SCRAP();
+const yts = require('yt-search');
+const fetch = require('node-fetch'); // npm install node-fetch
 
 function replaceYouTubeID(url) {
     const regex = /(?:youtube\.com\/(?:.*v=|.*\/)|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/;
@@ -19,28 +19,28 @@ cmd({
     filename: __filename
 }, async (conn, m, mek, { from, q, reply }) => {
     try {
-        if (!q) return await reply("❌ Please provide a Query or Youtube URL!");
+        if (!q) return await reply("❌ Please provide a Query or YouTube URL!");
 
-        let id = q.startsWith("https://") ? replaceYouTubeID(q) : null;
+        // Get video URL
+        let videoUrl = q.startsWith("https://") ? q : null;
 
-        if (!id) {
-            const searchResults = await dy_scrap.ytsearch(q);
-            if (!searchResults?.results?.length) return await reply("❌ No results found!");
-            id = searchResults.results[0].videoId;
+        if (!videoUrl) {
+            const searchResults = await yts(q);
+            if (!searchResults?.videos?.length) return await reply("❌ No results found!");
+            videoUrl = searchResults.videos[0].url;
         }
 
-        const data = await dy_scrap.ytsearch(`https://youtube.com/watch?v=${id}`);
-        if (!data?.results?.length) return await reply("❌ Failed to fetch video!");
+        const videoId = replaceYouTubeID(videoUrl);
+        const videoInfo = await yts({ videoId });
+        const title = videoInfo?.title || "Unknown";
+        const image = videoInfo?.thumbnail || null;
+        const duration = videoInfo?.timestamp || "Unknown";
 
-        const { url, title, image, timestamp, ago, views, author } = data.results[0];
-
-        let info = `🎵 *YouTube MP3 Download* 🎵\n\n` +
-            `*Title:* ${title || "Unknown"}\n` +
-            `*Duration:* ${timestamp || "Unknown"}\n` +
-            `*Views:* ${views || "Unknown"}\n` +
-            `*Release Ago:* ${ago || "Unknown"}\n` +
-            `*Author:* ${author?.name || "Unknown"}\n` +
-            `*Url:* ${url || "Unknown"}\n\n` +
+        // Send info message with reply options
+        const info = `🎵 *YouTube MP3 Download* 🎵\n\n` +
+            `*Title:* ${title}\n` +
+            `*Duration:* ${duration}\n` +
+            `*Url:* ${videoUrl}\n\n` +
             `Reply with:\n` +
             `1.1 Audio 🎵\n` +
             `1.2 Document 📁\n\n` +
@@ -49,7 +49,8 @@ cmd({
         const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
         const messageID = sentMsg.key.id;
 
-        conn.ev.on('messages.upsert', async (messageUpdate) => { 
+        // Wait for user reply
+        conn.ev.on('messages.upsert', async (messageUpdate) => {
             try {
                 const mekInfo = messageUpdate?.messages[0];
                 if (!mekInfo?.message) return;
@@ -58,18 +59,22 @@ cmd({
                 const isReplyToSentMsg = mekInfo?.message?.extendedTextMessage?.contextInfo?.stanzaId === messageID;
                 if (!isReplyToSentMsg) return;
 
+                // Call LAKIYA API
+                const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${encodeURIComponent(videoUrl)}&type=mp3`;
+                const headers = { "User-Agent": "Mozilla/5.0", "Accept": "application/json" };
+                const response = await fetch(apiUrl, { headers });
+                const data = await response.json();
+
+                if (!data?.url) return await reply("❌ Failed to fetch MP3 from API!");
+
                 let type;
                 if (userReply.trim() === "1.1") {
                     await conn.sendMessage(from, { text: "⏳ Processing Audio..." }, { quoted: mek });
-                    const response = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
-                    type = { audio: { url: response.result.download.url }, mimetype: "audio/mpeg" };
-
+                    type = { audio: { url: data.url }, mimetype: "audio/mpeg" };
                 } else if (userReply.trim() === "1.2") {
                     await conn.sendMessage(from, { text: "⏳ Processing Document..." }, { quoted: mek });
-                    const response = await dy_scrap.ytmp3(`https://youtube.com/watch?v=${id}`);
-                    type = { document: { url: response.result.download.url, fileName: `${title}.mp3`, mimetype: "audio/mpeg", caption: title } };
-
-                } else { 
+                    type = { document: { url: data.url, fileName: `${title}.mp3`, mimetype: "audio/mpeg", caption: title } };
+                } else {
                     return await reply("❌ Invalid choice! Reply with 1.1 or 1.2.");
                 }
 
