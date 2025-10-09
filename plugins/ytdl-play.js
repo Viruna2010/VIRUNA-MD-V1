@@ -1,7 +1,9 @@
 const { cmd } = require('../command');
 const config = require('../config');
 const yts = require('yt-search');
-const fetch = require('node-fetch');
+const ytdl = require('ytdl-core');
+const fs = require('fs');
+const path = require('path');
 
 cmd({
     pattern: "yt2",
@@ -9,19 +11,19 @@ cmd({
     react: "🎵",
     desc: "Download audio from YouTube",
     category: "download",
-    use: ".song <query or url>",
+    use: ".yt2 <query or URL>",
     filename: __filename
 }, async (conn, m, mek, { from, q, reply }) => {
     try {
-        if (!q) return await reply("❌ Please provide a song name or YouTube URL!");
+        if (!q) return await reply("❌ Please provide a YouTube URL or search query!");
 
         let videoUrl, title;
 
-        // Check if input is a URL
+        // Determine if input is a URL
         if (q.match(/(youtube\.com|youtu\.be)/)) {
             videoUrl = q;
-            const videoInfo = await yts({ videoId: q.split(/[=/]/).pop() });
-            title = videoInfo?.title || "Unknown";
+            const info = await ytdl.getInfo(videoUrl);
+            title = info.videoDetails.title;
         } else {
             // Search YouTube
             const search = await yts(q);
@@ -30,24 +32,61 @@ cmd({
             title = search.videos[0].title;
         }
 
+        // Send interactive message
+        const infoMsg = `🎵 *YouTube MP3 Download* 🎵\n\n` +
+                        `*Title:* ${title}\n` +
+                        `*Url:* ${videoUrl}\n\n` +
+                        `Reply with:\n` +
+                        `1.1 Audio 🎵\n` +
+                        `1.2 Document 📁\n\n` +
+                        `${config.FOOTER || "Viruna MD"}`;
+
+        const sentMsg = await conn.sendMessage(from, { text: infoMsg }, { quoted: mek });
+        const messageID = sentMsg.key.id;
+
+        // Wait for user reply
+        const filter = (update) => {
+            const msg = update?.messages?.[0];
+            if (!msg?.message) return false;
+            const replyText = msg?.message?.conversation || msg?.message?.extendedTextMessage?.text;
+            const isReplyToSentMsg = msg?.message?.extendedTextMessage?.contextInfo?.stanzaId === messageID;
+            return isReplyToSentMsg && (replyText === "1.1" || replyText === "1.2");
+        };
+
+        const collected = await conn.ev.wait('messages.upsert', { filter, max: 1, timeout: 60000 });
+        const mekReply = collected.messages[0];
+        const userReply = mekReply?.message?.conversation || mekReply?.message?.extendedTextMessage?.text;
+
         await reply("⏳ Downloading audio...");
 
-        // Call new API
-        const apiUrl = `https://rayhanzuck-yt.hf.space/?url=${encodeURIComponent(videoUrl)}&format=mp3&quality=128`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        // Download audio to temp file
+        const tempFile = path.join(__dirname, `${Date.now()}.mp3`);
+        const audioStream = ytdl(videoUrl, { filter: 'audioonly', quality: 'highestaudio' });
+        const writeStream = fs.createWriteStream(tempFile);
+        audioStream.pipe(writeStream);
 
-        if (!data?.url) return await reply("❌ Failed to download audio!");
+        writeStream.on('finish', async () => {
+            try {
+                if (userReply.trim() === "1.1") {
+                    await conn.sendMessage(from, { audio: fs.readFileSync(tempFile), mimetype: 'audio/mpeg', ptt: false }, { quoted: mek });
+                } else {
+                    await conn.sendMessage(from, { document: fs.readFileSync(tempFile), fileName: `${title}.mp3`, mimetype: 'audio/mpeg', caption: title }, { quoted: mek });
+                }
+                fs.unlinkSync(tempFile);
+                await reply(`✅ *${title}* downloaded successfully!`);
+            } catch (err) {
+                console.error(err);
+                await reply("❌ Failed to send audio!");
+            }
+        });
 
-        await conn.sendMessage(from, {
-            audio: { url: data.url, mimetype: 'audio/mpeg' },
-            ptt: false
-        }, { quoted: mek });
+        audioStream.on('error', async (err) => {
+            console.error(err);
+            await reply("❌ Failed to download audio!");
+        });
 
-        await reply(`✅ *${title}* downloaded successfully!`);
-
-    } catch (error) {
-        console.error(error);
-        await reply(`❌ Error: ${error.message}`);
+    } catch (err) {
+        console.error(err);
+        await reply(`❌ Error: ${err.message}`);
     }
 });
