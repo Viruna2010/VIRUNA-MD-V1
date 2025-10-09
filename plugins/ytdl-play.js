@@ -33,7 +33,7 @@ cmd({
         await reply("⏳ Downloading audio...");
 
         // Call new API
-        const apiUrl = `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp3?url=${encodeURIComponent(videoUrl)}`;
+        const apiUrl = `https://rayhanzuck-yt.hf.space/?url=${encodeURIComponent(videoUrl)}&format=mp3&quality=128`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
