@@ -1,8 +1,7 @@
-const config = require('../config');
 const { cmd } = require('../command');
+const config = require('../config');
 const yts = require('yt-search');
 const fetch = require('node-fetch');
-const https = require('https');
 
 cmd({
     pattern: "yt2",
@@ -17,8 +16,8 @@ cmd({
         if (!q) return await reply("❌ Please provide a song name or YouTube URL!");
 
         let videoUrl, title;
-        
-        // Check if it's a URL
+
+        // Check if input is a URL
         if (q.match(/(youtube\.com|youtu\.be)/)) {
             videoUrl = q;
             const videoInfo = await yts({ videoId: q.split(/[=/]/).pop() });
@@ -33,10 +32,9 @@ cmd({
 
         await reply("⏳ Downloading audio...");
 
-        // Call a reliable API (SSL bypass if necessary)
-        const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${encodeURIComponent(videoUrl)}&type=mp3`;
-        const agent = new https.Agent({ rejectUnauthorized: false });
-        const response = await fetch(apiUrl, { agent });
+        // Call new API
+        const apiUrl = `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp3?url=${encodeURIComponent(videoUrl)}`;
+        const response = await fetch(apiUrl);
         const data = await response.json();
 
         if (!data?.url) return await reply("❌ Failed to download audio!");
