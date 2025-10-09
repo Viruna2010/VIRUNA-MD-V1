@@ -1,7 +1,7 @@
 const config = require('../config');
 const { cmd } = require('../command');
 const yts = require('yt-search');
-const fetch = require('node-fetch'); // make sure this is installed: npm install node-fetch
+const fetch = require('node-fetch'); // npm install node-fetch
 
 cmd({
     pattern: "yt2",
@@ -17,11 +17,12 @@ cmd({
 
         let videoUrl, title;
 
-        // Check if it's a URL
+        // Check if input is a YouTube URL
         if (q.match(/(youtube\.com|youtu\.be)/)) {
             videoUrl = q;
-            const videoInfo = await yts({ videoId: q.split(/[=/]/).pop() });
-            title = videoInfo.title;
+            const videoId = q.split(/v=|\/|=/).pop();
+            const videoInfo = await yts({ videoId });
+            title = videoInfo?.title || "Unknown Title";
         } else {
             // Search YouTube
             const search = await yts(q);
@@ -32,8 +33,8 @@ cmd({
 
         await reply("⏳ Downloading audio...");
 
-        // API call
-        const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${url}&type=mp3`;
+        // Use LAKIYA API
+        const apiUrl = `https://lakiya-api-site.vercel.app/download/ytmp3new?url=${encodeURIComponent(videoUrl)}&type=mp3`;
         const headers = {
             "User-Agent": "Mozilla/5.0",
             "Accept": "application/json"
@@ -42,12 +43,13 @@ cmd({
         const response = await fetch(apiUrl, { headers });
         const data = await response.json();
 
-        if (!data.success || !data.result?.download_url) {
-            return await reply("❌ Failed to download audio!");
+        if (!data || !data.url) {
+            return await reply("❌ Failed to get MP3 from API!");
         }
 
+        // Send audio to WhatsApp
         await conn.sendMessage(from, {
-            audio: { url: data.result.download_url },
+            audio: { url: data.url },
             mimetype: 'audio/mpeg',
             ptt: false
         }, { quoted: mek });
