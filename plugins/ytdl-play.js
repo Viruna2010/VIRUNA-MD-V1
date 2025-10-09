@@ -19,20 +19,17 @@ cmd({
 
         let videoUrl, title;
 
-        // Determine if input is a URL
         if (q.match(/(youtube\.com|youtu\.be)/)) {
             videoUrl = q;
             const info = await ytdl.getInfo(videoUrl);
             title = info.videoDetails.title;
         } else {
-            // Search YouTube
             const search = await yts(q);
             if (!search.videos.length) return await reply("❌ No results found!");
             videoUrl = search.videos[0].url;
             title = search.videos[0].title;
         }
 
-        // Send interactive message
         const infoMsg = `🎵 *YouTube MP3 Download* 🎵\n\n` +
                         `*Title:* ${title}\n` +
                         `*Url:* ${videoUrl}\n\n` +
@@ -44,46 +41,57 @@ cmd({
         const sentMsg = await conn.sendMessage(from, { text: infoMsg }, { quoted: mek });
         const messageID = sentMsg.key.id;
 
-        // Wait for user reply
-        const filter = (update) => {
-            const msg = update?.messages?.[0];
-            if (!msg?.message) return false;
-            const replyText = msg?.message?.conversation || msg?.message?.extendedTextMessage?.text;
-            const isReplyToSentMsg = msg?.message?.extendedTextMessage?.contextInfo?.stanzaId === messageID;
-            return isReplyToSentMsg && (replyText === "1.1" || replyText === "1.2");
-        };
-
-        const collected = await conn.ev.wait('messages.upsert', { filter, max: 1, timeout: 60000 });
-        const mekReply = collected.messages[0];
-        const userReply = mekReply?.message?.conversation || mekReply?.message?.extendedTextMessage?.text;
-
-        await reply("⏳ Downloading audio...");
-
-        // Download audio to temp file
-        const tempFile = path.join(__dirname, `${Date.now()}.mp3`);
-        const audioStream = ytdl(videoUrl, { filter: 'audioonly', quality: 'highestaudio' });
-        const writeStream = fs.createWriteStream(tempFile);
-        audioStream.pipe(writeStream);
-
-        writeStream.on('finish', async () => {
+        // Listen for user reply
+        const listener = async (update) => {
             try {
-                if (userReply.trim() === "1.1") {
-                    await conn.sendMessage(from, { audio: fs.readFileSync(tempFile), mimetype: 'audio/mpeg', ptt: false }, { quoted: mek });
-                } else {
-                    await conn.sendMessage(from, { document: fs.readFileSync(tempFile), fileName: `${title}.mp3`, mimetype: 'audio/mpeg', caption: title }, { quoted: mek });
+                const mekReply = update?.messages?.[0];
+                if (!mekReply?.message) return;
+
+                const replyText = mekReply?.message?.conversation || mekReply?.message?.extendedTextMessage?.text;
+                const isReplyToSentMsg = mekReply?.message?.extendedTextMessage?.contextInfo?.stanzaId === messageID;
+                if (!isReplyToSentMsg) return;
+
+                if (replyText !== "1.1" && replyText !== "1.2") {
+                    await reply("❌ Invalid choice! Reply with 1.1 or 1.2.");
+                    return;
                 }
-                fs.unlinkSync(tempFile);
-                await reply(`✅ *${title}* downloaded successfully!`);
+
+                await reply("⏳ Downloading audio...");
+
+                const tempFile = path.join(__dirname, `${Date.now()}.mp3`);
+                const audioStream = ytdl(videoUrl, { filter: 'audioonly', quality: 'highestaudio' });
+                const writeStream = fs.createWriteStream(tempFile);
+                audioStream.pipe(writeStream);
+
+                writeStream.on('finish', async () => {
+                    try {
+                        if (replyText === "1.1") {
+                            await conn.sendMessage(from, { audio: fs.readFileSync(tempFile), mimetype: 'audio/mpeg', ptt: false }, { quoted: mek });
+                        } else {
+                            await conn.sendMessage(from, { document: fs.readFileSync(tempFile), fileName: `${title}.mp3`, mimetype: 'audio/mpeg', caption: title }, { quoted: mek });
+                        }
+                        fs.unlinkSync(tempFile);
+                        await reply(`✅ *${title}* downloaded successfully!`);
+                    } catch (err) {
+                        console.error(err);
+                        await reply("❌ Failed to send audio!");
+                    }
+                });
+
+                audioStream.on('error', async (err) => {
+                    console.error(err);
+                    await reply("❌ Failed to download audio!");
+                });
+
+                // Remove listener after first valid reply
+                conn.ev.off('messages.upsert', listener);
+
             } catch (err) {
                 console.error(err);
-                await reply("❌ Failed to send audio!");
             }
-        });
+        };
 
-        audioStream.on('error', async (err) => {
-            console.error(err);
-            await reply("❌ Failed to download audio!");
-        });
+        conn.ev.on('messages.upsert', listener);
 
     } catch (err) {
         console.error(err);
