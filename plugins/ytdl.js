@@ -49,7 +49,7 @@ cmd({
         const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
         const messageID = sentMsg.key.id;
 
-        // Wait for user reply
+        // Listen for user reply
         conn.ev.on('messages.upsert', async (messageUpdate) => {
             try {
                 const mekInfo = messageUpdate?.messages[0];
@@ -70,10 +70,12 @@ cmd({
                 let type;
                 if (userReply.trim() === "1.1") {
                     await conn.sendMessage(from, { text: "⏳ Processing Audio..." }, { quoted: mek });
-                    type = { audio: { url: data.url }, mimetype: "audio/mpeg" };
+                    type = { audio: { url: data.url, mimetype: "audio/mpeg" } };
+
                 } else if (userReply.trim() === "1.2") {
                     await conn.sendMessage(from, { text: "⏳ Processing Document..." }, { quoted: mek });
                     type = { document: { url: data.url, fileName: `${title}.mp3`, mimetype: "audio/mpeg", caption: title } };
+
                 } else {
                     return await reply("❌ Invalid choice! Reply with 1.1 or 1.2.");
                 }
